@@ -20,7 +20,7 @@ router.post('/signup', async (req, res) => {
     const newUser = new User({username,password});
     await newUser.save();
     const token = jwt.sign({_id:newUser._id}, 'CualquierPalabraYcp8tVwP!2%fyZDXtul$');
-    res.json({token})
+    res.status(201).json({token})
 })
 
 router.post('/signin', async (req,res) => {
@@ -33,9 +33,15 @@ router.post('/signin', async (req,res) => {
     res.json({token})
 })
 
-router.get('/admin', verifyToken, (req,res) => {
-    res.send('hecho')
+router.get('/admin', verifyToken, async (req,res) => {
+    const usuarios = await User.find()
+    res.json(usuarios)
     
+})
+
+router.get('/edit/:userid', verifyToken, async (req, res) => {
+    const userId = await User.findById(req.params.userid)
+    res.status(200).json(userId)
 })
 
 module.exports = router;
@@ -49,7 +55,7 @@ function verifyToken(req, res, next){
         return res.status(401).send('Acceso no autorizdo')
     }
     const payload = jwt.verify(token,'CualquierPalabraYcp8tVwP!2%fyZDXtul$')
-    req.userid =paiload._id;
+    req.userid = payload._id;
     next()
     
 }
