@@ -17,9 +17,11 @@ router.post('/signup', async (req, res) => {
     if(username.length == 0 || password.length == 0 ) return res.status(401).send('el usuario o password no puede estar vacio')
     const userValidate = await User.findOne({username})    
     if(userValidate) return res.status(401).send("este usuario ya existe, por favor seleccione otro");
+    console.log('User: ', User)
     const newUser = new User({
         username: username,
-        password: User.encryptPassword(password)
+        //password: User.encryptPassword(password)
+        password: password
     });    
     await newUser.save();
     const token = jwt.sign({_id:newUser._id}, 'CualquierPalabraYcp8tVwP!2%fyZDXtul$');
