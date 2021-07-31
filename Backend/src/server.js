@@ -1,6 +1,10 @@
 const express = require('express')
 const path = require('path')
+require('dotenv').config();
 require('./db')
+
+
+
 
 
 
@@ -22,6 +26,7 @@ app.listen(app.get('port'), ()=>{
 //Midlewares
 
 app.use(express.urlencoded({extended:false}))
+
 
 
 //globales

@@ -3,6 +3,7 @@ const router = Router()
 
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
+require('dotenv').config();
 
 router.get('/', (req, res) => {
     res.send('toor')
@@ -19,8 +20,8 @@ router.post('/signup', async (req, res) => {
     if(userValidate) return res.status(401).send("este usuario ya existe, por favor seleccione otro");    
     const newUser = new User({ username,password });    
     newUser.password = await User.encryptPassword(password)
-    await newUser.save();
-    const token = jwt.sign({_id:newUser._id}, 'CualquierPalabraYcp8tVwP!2%fyZDXtul$');
+    await newUser.save();    
+    const token = jwt.sign({_id:newUser._id}, process.env.SECRET_ENC);
     res.status(201).json({token})
 })
 
@@ -30,7 +31,7 @@ router.post('/signin', async (req,res) => {
     const user = await User.findOne({username})    
     if(!user) return res.status(401).send("este usuario no existe");
     if(user.password !== password ) return res.status(401).send('password incorrecto')    
-    const token = jwt.sign({_id:user._id}, 'CualquierPalabraYcp8tVwP!2%fyZDXtul$')
+    const token = jwt.sign({_id:user._id}, process.env.SECRET_ENC)
     res.json({token})
 })
 
@@ -55,7 +56,7 @@ function verifyToken(req, res, next){
     if(token === 'null'){
         return res.status(401).send('Acceso no autorizdo')
     }
-    const payload = jwt.verify(token,'CualquierPalabraYcp8tVwP!2%fyZDXtul$')
+    const payload = jwt.verify(token, process.env.SECRET_ENC)
     req.userid = payload._id;
     next()
     
