@@ -30,7 +30,10 @@ router.post('/signin', async (req,res) => {
     if(username.length == 0 || password.length == 0 ) return res.status(401).send('el usuario o password no puede estar vacio')
     const user = await User.findOne({username})    
     if(!user) return res.status(401).send("este usuario no existe");
-    if(user.password !== password ) return res.status(401).send('password incorrecto')    
+    const passwordpru = await User.encryptPassword(password)
+    const passwordrec = await User.comparePassword(user.password,password)
+    console.log('password-compare', passwordrec, 'user.password',user.password,'password',passwordpru)
+    if(user.password !== passwordrec ) return res.status(401).send('password incorrecto')    
     const token = jwt.sign({_id:user._id}, process.env.SECRET_ENC)
     res.json({token})
 })
