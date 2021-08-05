@@ -3,14 +3,13 @@ const bcrypt = require('bcryptjs')
 
 const userSchema = new Schema({
     username: String,
-    password: String
-},{
-    timestamps: true
-},{
+    password: String,
     roles: {
         ref: "Roles",
         type: Schema.Types.ObjectId
     }
+},{
+    timestamps: true
 });
 
 userSchema.statics.encryptPassword = async (password) => {
