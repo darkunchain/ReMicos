@@ -93,12 +93,14 @@ function verifyToken(req, res, next){
     next()    
 }
 
-async function rolAdmin(req, res, next) {
-    console.log('req.userid',req.userid)
-    const user = User.findById('610b4bf209c5c84b94d969c3')
-    console.log('user',user)
-    const roles = await Roles.find({_id:user.roles})
-    console.log('roles: ',user.roles)
+async function rolAdmin(req, res, next) {    
+    const userFind = await User.findById(req.userid);   
+    const rolFind = await Roles.find({_id:userFind.roles})
+    const rolAdmin = await Roles.findOne({nombre:'admin'})
+    console.log('rolFind: ', rolFind[0]._id, 'rolAdmin: ', rolAdmin._id)
+    if(rolFind[0]._id !== rolAdmin._id){
+        return res.status(401).send('Acceso no autorizdo')
+    }     
     next()
      
 }
