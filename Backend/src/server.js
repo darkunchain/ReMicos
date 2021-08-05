@@ -3,13 +3,15 @@ const path = require('path')
 require('dotenv').config();
 require('./db')
 
-
-
+crearRoles = require('./funciones/crearRoles');
 
 
 
 //inicializacion
 const app = express();
+
+crearRoles();  //crea roles iniciales desde el archivo funciones
+
 app.use(express.json())
 
 app.use('/api',require('./routes/asientos'))

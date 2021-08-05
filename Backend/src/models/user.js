@@ -7,10 +7,10 @@ const userSchema = new Schema({
 },{
     timestamps: true
 },{
-    roles: [{
+    roles: {
         ref: "Roles",
         type: Schema.Types.ObjectId
-    }]
+    }
 });
 
 userSchema.statics.encryptPassword = async (password) => {
