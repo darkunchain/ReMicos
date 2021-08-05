@@ -57,7 +57,7 @@ router.get('/admin', verifyToken, async (req,res) => {
     
 })
 
-router.post('/admin/roles', verifyToken, async (req,res) => {
+router.post('/admin/roles', [verifyToken, rolAdmin], async (req,res) => {
     
     const { nombre, descripcion,jwt } = req.body;
     req.body.jwt
@@ -86,9 +86,37 @@ function verifyToken(req, res, next){
     const token = req.headers.authorization.split(' ')[1]
     if(token === 'null'){
         return res.status(401).send('Acceso no autorizdo')
-    }
+    }    
     const payload = jwt.verify(token, process.env.SECRET_ENC)
+    console.log('payload:',payload)
     req.userid = payload._id;
+    next()    
+}
+
+async function rolAdmin(req, res, next) {
+    console.log('req.userid',req.userid)
+    const user = User.findById('610b4bf209c5c84b94d969c3')
+    console.log('user',user)
+    const roles = await Roles.find({_id:user.roles})
+    console.log('roles: ',user.roles)
     next()
-    
+     
+}
+
+async function rolOperador(req, res, next){
+    const user = User.findById(req.userid)
+    const roles = await Roles.find({_id:user.roles})
+    next() 
+}
+
+async function rolContador(req, res, next){
+    const user = User.findById(req.userid)
+    const roles = await Roles.find({_id:user.roles})
+    next() 
+}
+
+async function rolMonitoreo(req, res, next){
+    const user = User.findById(req.userid)
+    const roles = await Roles.find({_id:user.roles})
+    next() 
 }
