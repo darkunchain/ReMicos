@@ -12,7 +12,7 @@ import { HeaderComponent } from './componentes/header/header.component';
     HeaderComponent
   ],
   imports: [
-    RouterModule,
+    RouterModule.forRoot([]),
     BrowserModule
   ],
   exports: [
