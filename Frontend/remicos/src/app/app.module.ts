@@ -5,11 +5,15 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './componentes/header/header.component';
+import { LoginComponent } from './componentes/auth//login/login.component';
+import { RegisterComponent } from './componentes/auth/register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     RouterModule.forRoot([]),
@@ -17,7 +21,9 @@ import { HeaderComponent } from './componentes/header/header.component';
   ],
   exports: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
