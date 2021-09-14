@@ -2,28 +2,26 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './componentes/header/header.component';
-import { LoginComponent } from './componentes/auth//login/login.component';
-import { RegisterComponent } from './componentes/auth/register/register.component';
+import { AuthModule } from './componentes/auth/auth.module';
+import { AuthRoutingModule } from './componentes/auth/auth-routing.module';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
-    LoginComponent,
-    RegisterComponent
+    AppComponent
   ],
   imports: [
     RouterModule.forRoot([]),
-    BrowserModule
+    BrowserModule,
+    AuthModule,
+    RouterModule,
+    AuthRoutingModule
   ],
   exports: [
     AppComponent,
-    HeaderComponent,
-    LoginComponent,
-    RegisterComponent
+    HeaderComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
