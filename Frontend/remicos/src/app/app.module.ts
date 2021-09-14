@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './componentes/auth/auth.module';
 import { AuthRoutingModule } from './componentes/auth/auth-routing.module';
 import { SharedModule } from './shared/shared.module';
+import { RemicosModule } from './remicos/remicos.module';
+
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     RouterModule.forRoot([]),
@@ -18,7 +20,8 @@ import { SharedModule } from './shared/shared.module';
     AuthModule,
     RouterModule,
     AuthRoutingModule,
-    SharedModule
+    SharedModule,
+    RemicosModule
   ],
   exports: [
     AppComponent
