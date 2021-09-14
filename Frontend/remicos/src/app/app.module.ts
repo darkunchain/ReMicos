@@ -3,9 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './componentes/header/header.component';
 import { AuthModule } from './componentes/auth/auth.module';
 import { AuthRoutingModule } from './componentes/auth/auth-routing.module';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -17,11 +17,11 @@ import { AuthRoutingModule } from './componentes/auth/auth-routing.module';
     BrowserModule,
     AuthModule,
     RouterModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    SharedModule
   ],
   exports: [
-    AppComponent,
-    HeaderComponent
+    AppComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
