@@ -3,18 +3,17 @@
       <div id="formContent">
         <!-- Tabs Titles -->
         <h2 class="active"> Iniciar sesión </h2>
-        <h2><a class="inactive underlineHover" [routerLink]="['register']" routerLinkActive="active">Registrese</a></h2>
-        
-    
+        <h2><a class="inactive underlineHover" [routerLink]="['../register']" routerLinkActive="active">Registrese</a></h2>
+
+
         <!-- Icon -->
         <div class="fadeIn first">
-          <img src="../../../../img/" id="icon" alt="User Icon" />
           <svg width="5rem" viewBox="0 0 123.5257 137.56705" version="1.1" id="svg5"
         inkscape:version="1.1 (c68e22c387, 2021-05-23)" sodipodi:docname="favicon1.svg"
         xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
         xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg"
-        xmlns:svg="http://www.w3.org/2000/svg">      
-        <defs id="defs2">      
+        xmlns:svg="http://www.w3.org/2000/svg">
+        <defs id="defs2">
         </defs>
         <g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(-428.76203,-121.07441)">
           <path style="fill:#000000;stroke-width:0.264583"
@@ -23,19 +22,19 @@
         </g>
       </svg>
         </div>
-    
+
         <!-- Login Form -->
         <form>
           <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario">
           <input type="text" id="password" class="fadeIn third" name="login" placeholder="contraseña">
           <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
-    
+
         <!-- Remind Passowrd -->
         <div id="formFooter">
-          <a class="underlineHover nav-link" [routerLink]="['reset-password']" routerLinkActive="active">Olvido su contraseña?</a>
+          <a class="underlineHover nav-link" [routerLink]="['/reset-password']" routerLinkActive="active">Olvido su contraseña?</a>
         </div>
-    
+
       </div>
     </div>
 </div>

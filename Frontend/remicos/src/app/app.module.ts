@@ -7,6 +7,8 @@ import { AuthModule } from './componentes/auth/auth.module';
 import { AuthRoutingModule } from './componentes/auth/auth-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { RemicosModule } from './remicos/remicos.module';
+import { RemicosRoutingModule } from './remicos/remicos-routing.module';
+import { SharedRoutingModule } from './shared/shared-routing.module';
 
 
 
@@ -16,12 +18,15 @@ import { RemicosModule } from './remicos/remicos.module';
   ],
   imports: [
     RouterModule.forRoot([]),
+    RouterModule,
     BrowserModule,
     AuthModule,
-    RouterModule,
     AuthRoutingModule,
     SharedModule,
-    RemicosModule
+    SharedRoutingModule,
+    RemicosModule,
+    RemicosRoutingModule,
+
   ],
   exports: [
     AppComponent
