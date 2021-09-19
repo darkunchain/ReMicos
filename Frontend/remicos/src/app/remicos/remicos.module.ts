@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import { TituloClienteComponent } from './titulo-cliente/titulo-cliente.component';
+import { SharedModule } from '../shared/shared.module';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 
@@ -13,7 +16,10 @@ import { TituloClienteComponent } from './titulo-cliente/titulo-cliente.componen
     TituloClienteComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule,
+    RouterModule,
+    AppRoutingModule
   ],
   exports: [
     ClientesComponent,

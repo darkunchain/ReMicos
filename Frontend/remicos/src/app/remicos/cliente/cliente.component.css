@@ -1,8 +1,58 @@
 .success{
   background-color: rgb(94, 179, 98);
-  font-size: 1.8vw;
+  font-size: 1vw;
 }
 
-.btn.btn-primary{
-  font-size: 1.8vw;
+.btn.btn-danger{
+  font-size: 1vw;
+}
+
+.row {
+  --bs-gutter-x: 0;
+}
+
+.col-2 {
+  text-align: center;
+}
+
+
+
+@media screen and (max-width: 1992px){
+  .success{
+    font-size: 16px;
+  }
+  .btn.btn-danger{
+    font-size: 14px;
+  }
+  .btn {
+    font-size: 14px;
+  }
+
+}
+
+@media screen and (max-width: 900px){
+  .success{
+    font-size: 1.8vw;
+  }
+  .btn.btn-danger{
+    font-size: 1.6vw;
+  }
+  .btn {
+    font-size: 1.6vw;
+  }
+
+}
+
+
+@media screen and (max-width: 600px){
+  .success{
+    font-size: 10px;
+  }
+  .btn.btn-danger{
+    font-size: 10px;
+  }
+  .btn {
+    font-size: 8px;
+  }
+
 }

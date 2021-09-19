@@ -1,0 +1,9 @@
+.container-main {
+  margin: 0 5px 5px 0;
+  width: 300px;
+  background-color: blue;
+}
+
+.container-enviado {
+  text-align: center;
+}

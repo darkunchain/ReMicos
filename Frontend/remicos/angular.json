@@ -28,7 +28,7 @@
             ],
             "styles": [
               "src/styles.css",
-              "bootswatch/dist/Darkly/bootstrap.min.css"
+              "./node_modules/bootswatch/dist/zephyr/bootstrap.min.css"
             ],
             "scripts": []
           },

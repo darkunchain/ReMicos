@@ -4,14 +4,26 @@ import { LoginComponent } from '../app/componentes/auth/login/login.component';
 import { RegisterComponent } from '../app/componentes/auth/register/register.component';
 import { ResetPasswordComponent } from '../app/componentes/auth/reset-password/reset-password.component';
 import { ClientesComponent } from '../app/remicos/clientes/clientes.component';
-import { ClienteComponent } from '../app/remicos/cliente/cliente.component';
+import { AcordeonComponent } from './componentes/acordeon/acordeon.component';
+import { Error404Component } from './componentes/error404/error404.component';
+import { PopupformComponent } from './componentes/popupform/popupform.component';
 
 const routes: Routes = [
-  {path: '', component: ClientesComponent},
-  {path: 'login', component: LoginComponent},
+
+  {path: '', redirectTo: '/acordeon', pathMatch: 'full'},
+  //{path: '', component: AcordeonComponent},
+  {path: 'newclient', component: PopupformComponent, outlet:'popupform'},
+  {path: 'acordeon', component: AcordeonComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
-  {path: 'cliente', component: ClienteComponent}
+  {path: 'zonae', component: ClientesComponent},
+  {path: 'client', component: ClientesComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'error404', component: ClientesComponent, pathMatch: 'full'},
+  // {path: '**', redirectTo: 'error404', pathMatch: 'full'},
+
+
+
 ];
 
 @NgModule({

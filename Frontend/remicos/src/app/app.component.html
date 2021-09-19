@@ -1,6 +1,8 @@
 <app-header></app-header>
 <router-outlet></router-outlet>
-<app-titulo-cliente></app-titulo-cliente>
-<app-cliente [tarjeta]= 5 nombre='Luis Fernando Prieto' telefono= 3175027179 tiempo= 15></app-cliente>
-<app-cliente [tarjeta]= 6 nombre='Juan Lucas Prieto Rugeles' telefono= 3115761651 tiempo= 15></app-cliente>
 <app-footer></app-footer>
+
+<div class="centerfix">
+  <router-outlet name="popupform"></router-outlet>
+</div>
+
