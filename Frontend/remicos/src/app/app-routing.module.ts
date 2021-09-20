@@ -10,9 +10,9 @@ import { PopupformComponent } from './componentes/popupform/popupform.component'
 
 const routes: Routes = [
 
-  {path: '', redirectTo: '/acordeon', pathMatch: 'full'},
+  //{path: '', redirectTo: '/client', pathMatch: 'full'},
   //{path: '', component: AcordeonComponent},
-  {path: 'newclient', component: PopupformComponent, outlet:'popupform'},
+  {path: 'newclient', component: PopupformComponent},
   {path: 'acordeon', component: AcordeonComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
