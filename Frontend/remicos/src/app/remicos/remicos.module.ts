@@ -9,11 +9,12 @@ import { AppRoutingModule } from '../app-routing.module';
 
 
 
+
 @NgModule({
   declarations: [
     ClientesComponent,
     ClienteComponent,
-    TituloClienteComponent
+    TituloClienteComponent,    
   ],
   imports: [
     CommonModule,

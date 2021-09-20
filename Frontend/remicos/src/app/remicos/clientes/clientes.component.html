@@ -6,5 +6,9 @@
   <app-cliente class ="bg-success text-white" [tarjeta]=8 nombre='Diana Mireya Rugeles Albarracin' telefono=3115761651 tiempo=15></app-cliente>
 </div>
 
-<a type="button" [routerLink]="[{outlets: {popupform: ['newclient']}}]" [routerLinkActive]="'active'"
+<!-- <a type="button" [routerLink]="[{outlets: {popupform: ['newclient']}}]" [routerLinkActive]="'active'"
+  class="btn btn-danger btn-circle" role="button" aria-pressed="true"><i class="fa fa-plus"></i></a>
+ -->
+
+ <a type="button" routerLink="newclient"
   class="btn btn-danger btn-circle" role="button" aria-pressed="true"><i class="fa fa-plus"></i></a>
