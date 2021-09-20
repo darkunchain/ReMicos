@@ -10,5 +10,9 @@
   class="btn btn-danger btn-circle" role="button" aria-pressed="true"><i class="fa fa-plus"></i></a>
  -->
 
- <a type="button" routerLink="newclient"
-  class="btn btn-danger btn-circle" role="button" aria-pressed="true"><i class="fa fa-plus"></i></a>
+<a type="button" [routerLink]="['/zonae', {outlets:{'popupformol': ['popupformPath']}}]" 
+  class="btn btn-danger btn-circle" role="button" aria-pressed="true" (click)="openPopup()"><i class="fa fa-plus"></i></a>
+
+
+ <!-- <a type="button" routerLink="newclient"
+  class="btn btn-danger btn-circle" role="button" aria-pressed="true"><i class="fa fa-plus"></i></a> -->

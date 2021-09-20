@@ -16,7 +16,10 @@ const routes: Routes = [
   {path: 'acordeon', component: AcordeonComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
-  {path: 'zonae', component: ClientesComponent},
+  {path: 'zonae', component: ClientesComponent,children:[
+    {path: 'popupformPath', outlet: 'popupformol', component: PopupformComponent},
+    {path: 'popup', component: PopupformComponent},
+  ]},
   {path: 'client', component: ClientesComponent},
   {path: 'login', component: LoginComponent},
   {path: 'error404', component: ClientesComponent, pathMatch: 'full'},

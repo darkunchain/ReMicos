@@ -38,6 +38,10 @@
   right: 10px;
 }
 
+.fa-plus:before {  
+  color: white;
+}
+
 
 @media screen and (max-width: 1992px){
   .btn-circle.btn-xl {

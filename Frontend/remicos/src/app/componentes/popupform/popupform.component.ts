@@ -9,11 +9,16 @@ import { Router } from '@angular/router';
 export class PopupformComponent implements OnInit {
 
   enviado = false;
+  visible = false;
 
   constructor(private router: Router) { }
 
   cerrar() {
     this.router.navigate([{outlets: {popupform: null }}]);
+  }
+
+  openPopup() {
+    this.visible = true;
   }
 
   ngOnInit(): void {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { cliente } from '../../models/cliente'
 
+
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
@@ -9,8 +10,15 @@ import { cliente } from '../../models/cliente'
 export class ClientesComponent implements OnInit {
 
   clientes: cliente[] =[];
+  visible: string ='';
+ 
 
   constructor() { }
+
+  openPopup() {
+   this.visible ='true'
+  }
+
 
   ngOnInit(): void {
 

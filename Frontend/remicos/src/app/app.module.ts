@@ -9,6 +9,7 @@ import { AcordeonComponent } from './componentes/acordeon/acordeon.component';
 import { Error404Component } from './componentes/error404/error404.component';
 import { PopupformComponent } from './componentes/popupform/popupform.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -27,6 +28,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SharedModule,
     RemicosModule,
     NgbModule,
+    FormsModule
   ],
   exports: [
     AppComponent,
