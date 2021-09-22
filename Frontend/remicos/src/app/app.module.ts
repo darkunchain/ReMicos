@@ -10,6 +10,7 @@ import { Error404Component } from './componentes/error404/error404.component';
 import { PopupformComponent } from './componentes/popupform/popupform.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { GraficasModule } from './modulos/graficas/graficas.module';
 
 
 
@@ -28,7 +29,10 @@ import { FormsModule } from '@angular/forms';
     SharedModule,
     RemicosModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    
+    
+    
   ],
   exports: [
     AppComponent,
