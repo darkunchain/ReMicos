@@ -1,10 +1,13 @@
 const { Schema,model } = require('mongoose')
 
 const registroSchema = new Schema({
-    ficha: Number,
+    turno: Number,
     nombre: String,
     telefono: Number,
-    opcion: Number,
+    tiempo: Number,
+    accion: String,
+    blink: Boolean,
+    createdAt: Date | String,
 
 })
 
