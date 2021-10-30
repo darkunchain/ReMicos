@@ -20,7 +20,7 @@ app.use('/api',require('./routes/users'))
 
 
 //configuraciones
-app.set('port',process.env.PORT || 3000)
+app.set('port',process.env.PORT || 4200)
 app.listen(app.get('port'), ()=>{
     console.log('Server on port ',app.get('port'))
 })
