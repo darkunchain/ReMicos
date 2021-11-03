@@ -25,7 +25,7 @@ app.options('*', cors());
 
 
 //configuraciones
-app.set('port',process.env.PORT || 3000)
+app.set('port',process.env.PORT || 8081)
 app.listen(app.get('port'), ()=>{
     console.log('Server on port ',app.get('port'))
 })
