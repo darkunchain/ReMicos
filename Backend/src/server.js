@@ -20,7 +20,7 @@ app.use('/api',require('./routes/asientos'))
 app.use('/api',require('./routes/registros'))
 app.use('/api',require('./routes/users'))
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true  }));
 app.options('*', cors());
 
 
