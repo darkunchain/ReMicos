@@ -23,20 +23,20 @@ app.use('/api',require('./routes/users'))
 app.use(cors());
 app.options('*', cors());
 
-var allowCrossDomain = function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Cache-Control");
 
-    // intercept OPTIONS method
-    if ('OPTIONS' == req.method) {
-      res.send(200);
-    }
-    else {
-      next();
-    }
-};
-app.use(allowCrossDomain);
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Methods",
+    "PUT, GET, POST, DELETE, OPTIONS"
+  );
+  next();
+});
 
 
 //configuraciones
