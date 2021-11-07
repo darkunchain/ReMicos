@@ -20,8 +20,8 @@ app.use('/api',require('./routes/asientos'))
 app.use('/api',require('./routes/registros'))
 app.use('/api',require('./routes/users'))
 
-app.use(cors({ origin: true, credentials: true, methods: 'POST,GET,PUT,OPTIONS,DELETE'  }));
-app.options('*', cors());
+
+//app.options('*', cors());
 
 
 
@@ -37,6 +37,8 @@ app.use(function(req, res, next) {
   );
   next();
 });
+
+app.use(cors({ origin: true, methods: 'POST,GET,PUT,OPTIONS,DELETE'  }));
 
 
 //configuraciones
