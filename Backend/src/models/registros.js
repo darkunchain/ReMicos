@@ -8,6 +8,7 @@ const registroSchema = new Schema({
     accion: String,
     blink: Boolean,
     createdAt: Date | String,
+    isoDate: Date
 
 })
 
