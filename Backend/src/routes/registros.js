@@ -20,8 +20,8 @@ router.get('/registros', async (req, res) => {
     
     
     const aggre = await Registro.aggregate([
-        { $dateFromString: {
-            dateString: $Date            
+        { "$dateFromString": {
+            "dateString": "Date"            
        } },
         
         {
