@@ -34,16 +34,16 @@ router.get('/registros', async (req, res) => {
                 "_id": "$DueDateWeek",
                 "AvgValue": { "$avg": "$Rank" },
                 "MonthValue": { "$first": "$DueDateMonth" },
-                "Fecha":yearMonthDayUTC
+                "Fecha":{"$first": "$yearMonthDayUTC"}
             }
         }
     ])
 
 
     res.status(200).send({ Clientes, aggre })
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
+    //res.header("Access-Control-Allow-Origin", "*");
+    //res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    //next();
 })
 
 module.exports = router;
