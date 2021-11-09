@@ -16,7 +16,9 @@ router.post('/add', async (req, res) => {
 
 router.get('/registros', async (req, res) => {
     //const Clientes = await Registro.findById(req.params.userid)
-    const Clientes = await Registro.find().aggregate([        
+    const Clientes = await Registro.find()
+    
+    const aggre = await Registro.aggregate([        
 
         {
             "$project": {                
