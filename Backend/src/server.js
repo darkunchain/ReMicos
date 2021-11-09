@@ -24,9 +24,9 @@ app.use('/api',require('./routes/users'))
 //app.options('*', cors());
 
 
-
+app.use(cors());
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:4200");  
+  res.header("Access-Control-Allow-Origin", "*");  
   res.header(
     "Access-Control-Allow-Headers",
     "X-Requested-With, Content-Type, Accept"
@@ -38,11 +38,11 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(cors({ origin: true, methods: 'POST,GET,PUT,OPTIONS,DELETE'  }));
+
 
 
 //configuraciones
-app.set('port',process.env.PORT || 8081)
+app.set('port',process.env.PORT || 3000)
 app.listen(app.get('port'), ()=>{
     console.log('Server on port ',app.get('port'))
 })
