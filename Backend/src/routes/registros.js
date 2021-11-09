@@ -19,18 +19,12 @@ router.get('/registros', async (req, res) => {
     const Clientes = await Registro.find()
 
     
-    const aggre = await Registro.aggregate([
-        
-        dateConversionStage = {
-            $addFields: {
-               convertedDate: { $toDate: "$createdAt" }
-            }
-         },
+    const aggre = await Registro.aggregate([        
 
         {
             "$project": {                
-                "DueDateWeek": { "$week": "$Date" },
-                "DueDateMonth": { "$month": "$Date" },
+                "DueDateWeek": { "$week": "$isoDate" },
+                "DueDateMonth": { "$month": "$isoDate" },
                 "Rank": 1
             }
         },
@@ -38,8 +32,7 @@ router.get('/registros', async (req, res) => {
             "$group": {
                 "_id": "$DueDateWeek",
                 "AvgValue": { "$avg": "$Rank" },
-                "MonthValue": { "$first": "$DueDateMonth" },
-                "Fecha":{"$first": "$yearMonthDayUTC"}
+                "MonthValue": { "$first": "$DueDateMonth" }
             }
         }
     ])
