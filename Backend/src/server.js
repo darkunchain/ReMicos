@@ -16,20 +16,12 @@ crearRoles();  //crea roles iniciales desde el archivo funciones
 
 app.use(express.json())
 
-app.use('/api',require('./routes/asientos'))
-app.use('/api',require('./routes/registros'))
-app.use('/api',require('./routes/users'))
-
-
-//app.options('*', cors());
-
-
 app.use(cors());
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");  
   res.header(
     "Access-Control-Allow-Headers",
-    "X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept"
   );
   res.header(
     "Access-Control-Allow-Methods",
@@ -37,6 +29,20 @@ app.use(function(req, res, next) {
   );
   next();
 });
+
+
+app.all('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+ });
+
+app.use('/api',require('./routes/asientos'))
+app.use('/api',require('./routes/registros'))
+app.use('/api',require('./routes/users'))
+
+
+//app.options('*', cors());
 
 
 

@@ -18,6 +18,9 @@ router.get('/registros', async (req, res) => {
     //const Clientes = await Registro.findById(req.params.userid)
     const Clientes = await Registro.find()    
     res.status(200).send(Clientes)
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
 })
 
 module.exports = router;
