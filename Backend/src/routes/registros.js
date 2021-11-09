@@ -27,8 +27,7 @@ router.get('/registros', async (req, res) => {
         },
         {
             "$group": {
-                "_id": "$DueDateWeek",
-                "AvgValue": { "$avg": "$Rank" },
+                "_id": {"$count":"$DueDateWeek"},                
                 "MonthValue": { "$first": "$DueDateMonth" }
             }
         }
