@@ -18,12 +18,17 @@ router.get('/registros', async (req, res) => {
     //const Clientes = await Registro.findById(req.params.userid)
     const Clientes = await Registro.find()
 
-
-    const aggre = await Registro.aggregate([       
+    
+    const aggre = await Registro.aggregate([
+        
+        dateConversionStage = {
+            $addFields: {
+               convertedDate: { $toDate: "$createdAt" }
+            }
+         },
 
         {
-            "$project": {
-                yearMonthDayUTC: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+            "$project": {                
                 "DueDateWeek": { "$week": "$Date" },
                 "DueDateMonth": { "$month": "$Date" },
                 "Rank": 1
