@@ -70,10 +70,6 @@ router.get('/registros', async (req, res) => {
     ])
 
 
-
-
-
-
     const contHoy = await Registro.aggregate([
         {
             "$project": {                
@@ -130,11 +126,8 @@ router.get('/registros', async (req, res) => {
         {$count: "count"}
     ])
 
-    //const semanaCero = aggre.semana[0]
-    //const contarSem = aggre.semana
-
-    //const clienteAggre = Registro.find({"semana":45})
-    //console.log('contarSem: ', contarSem)
+    
+    console.log('var1: ', ClientesCount,'var2: ', contMesAct,'var3: ', contSemAct,'var4: ', contDiaAct,'var5: ', contHoy)
 
 
     res.status(200).send({ ClientesCount, contMesAct, contSemAct, contDiaAct, contHoy, aggre, Clientes })
