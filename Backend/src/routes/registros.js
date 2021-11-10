@@ -18,11 +18,18 @@ router.get('/registros', async (req, res) => {
     //const Clientes = await Registro.findById(req.params.userid)
     const Clientes = await Registro.find()
     
-    const aggre = await Registro.aggregate([        
+    const aggre = await Registro.aggregate([
+        {
+            "$project": {                
+                "dateWeek": { "$week": "$isoDate" },
+                "dateMonth": { "$month": "$isoDate" },
+                "Rank": 1
+            }
+        },
         {
             "$group": {
-                "semana": { "$week": "$isoDate" },                
-                "mesReg": { "$month": "$isoDate" },
+                "semana": dateWeek,                
+                "mesReg": "$dateMonth"
             }
         }
     ])
