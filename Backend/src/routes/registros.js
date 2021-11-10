@@ -22,8 +22,9 @@ router.get('/registros', async (req, res) => {
     const diaAct = fechaAct.getDay() + 1    
     const semAct = 45
     const mesAct = fechaAct.getMonth() + 1
+    const anioAct = fechaAct.getFullYear()
 
-    console.log('dia: ',diaAct,'mes: ',mesAct)
+    console.log('dia: ',diaAct,'mes: ',mesAct, 'año: ', anioAct)
     //console.log('semana: ',fechaAct.getWeek())
 
     
@@ -33,6 +34,7 @@ router.get('/registros', async (req, res) => {
                 "dateWeek": { "$week": "$isoDate" },
                 "dateMonth": { "$month": "$isoDate" },
                 "dateDay" : { "$dayOfWeek" : "$isoDate"},
+                "dateYear" : { "$year" : "$isoDate"},
                 "Rank": 1
             }
         },
@@ -42,6 +44,7 @@ router.get('/registros', async (req, res) => {
                 "semana": { $first: "$dateWeek"},                
                 "mesReg": { $first: "$dateMonth"},
                 "diaReg": { $first: "$dateDay"},
+                "anoReg": { $first: "$dateYear"},
             }
         }
         
@@ -76,48 +79,54 @@ router.get('/registros', async (req, res) => {
             "$project": {                
                 "dateDay" : { "$dayOfWeek" : "$isoDate"},
                 "dateWeek": { "$week": "$isoDate" },
+                "dateYear" : { "$year" : "$isoDate"},
             }
         },
         {
             "$group": {
                 "_id" : "$_id",
                 "diaReg": { $first: "$dateDay"},
-                "semana": { $first: "$dateWeek"}
+                "semana": { $first: "$dateWeek"},
+                "anio": { $first: "$dateYear"},
             }
         },
-        {"$match": {"diaReg" : diaAct, "semana" : semAct}},
+        {"$match": {"diaReg" : diaAct, "semana" : semAct, "anio" : anioAct}},
         {$count: "count"}
     ])
 
     const contSemAct = await Registro.aggregate([
         {
             "$project": {                
-                "dateWeek": { "$week": "$isoDate" },                
+                "dateWeek": { "$week": "$isoDate" },
+                "dateYear" : { "$year" : "$isoDate"},
             }
         },
         {
             "$group": {
                 "_id" : "$_id",
-                "semana": { $first: "$dateWeek"}                
+                "semana": { $first: "$dateWeek"},
+                "anio": { $first: "$dateYear"},
             }
         },
-        {"$match": {"semana" : semAct}},
+        {"$match": {"semana" : semAct, "anio" : anioAct}},
         {$count: "count"}
     ])
 
     const contMesAct = await Registro.aggregate([
         {
             "$project": {                
-                "dateMonth": { "$month": "$isoDate" },               
+                "dateMonth": { "$month": "$isoDate" },
+                "dateYear" : { "$year" : "$isoDate"},
             }
         },
         {
             "$group": {
                 "_id" : "$_id",
                 "mesReg": { $first: "$dateMonth"},
+                "anio": { $first: "$dateYear"},
             }
         },
-        {"$match": {"mesReg" : mesAct}},
+        {"$match": {"mesReg" : mesAct, "anio" : anioAct}},
         {$count: "count"}
     ])
 
