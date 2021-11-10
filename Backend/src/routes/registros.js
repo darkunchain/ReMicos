@@ -53,7 +53,7 @@ router.get('/registros', async (req, res) => {
 
     
 
-    const contDiaAct = await Registro.aggregate([
+    const contDiaA = await Registro.aggregate([
         {
             "$project": {                
                 "dateDay" : { "$dayOfWeek" : "$isoDate"},                
@@ -70,7 +70,7 @@ router.get('/registros', async (req, res) => {
     ])
 
 
-    const contHoy = await Registro.aggregate([
+    const contHoyA = await Registro.aggregate([
         {
             "$project": {                
                 "dateDay" : { "$dayOfWeek" : "$isoDate"},
@@ -90,7 +90,7 @@ router.get('/registros', async (req, res) => {
         {$count: "conteo"}
     ])
 
-    const contSemAct = await Registro.aggregate([
+    const contSemA = await Registro.aggregate([
         {
             "$project": {                
                 "dateWeek": { "$week": "$isoDate" },
@@ -108,7 +108,7 @@ router.get('/registros', async (req, res) => {
         {$count: "conteo"}
     ])
 
-    const contMesAct = await Registro.aggregate([
+    const contMesA = await Registro.aggregate([
         {
             "$project": {                
                 "dateMonth": { "$month": "$isoDate" },
@@ -126,17 +126,17 @@ router.get('/registros', async (req, res) => {
         {$count: "conteo"}
     ])
 
-    contMesNew = contMesAct[0].conteo
-    contSemNew = contSemAct[0].conteo
-    contDiaNew = contDiaAct[0].conteo
-    contHoyNew = contHoy[0].conteo
+    const contMesAct = contMesA[0].conteo
+    const contSemAct = contSemA[0].conteo
+    const contDiaAct = contDiaA[0].conteo
+    const contHoy = contHoyA[0].conteo
 
 
     
-    console.log('var1: ', ClientesCount,'var2: ', contMesNew,'var3: ', contSemNew,'var4: ', contDiaNew,'var5: ', contHoyNew)
+    
 
 
-    res.status(200).send({ ClientesCount, contMesNew, contSemNew, contDiaNew, contHoyNew, aggre, Clientes })
+    res.status(200).send({ ClientesCount, contMesAct, contSemAct, contDiaAct, contHoy, aggre, Clientes })
     //res.header("Access-Control-Allow-Origin", "*");
     //res.header("Access-Control-Allow-Headers", "X-Requested-With");
     //next();
