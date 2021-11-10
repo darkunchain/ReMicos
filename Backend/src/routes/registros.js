@@ -30,8 +30,8 @@ router.get('/registros', async (req, res) => {
         },
         {
             "$group": {
-                "_id": "$dateWeek",                
-                "mesReg": "$dateMonth"
+                "semana": { $push: "$dateWeek"},                
+                "mesReg": { $push: "$dateMonth"}
             }
         }
     ])
