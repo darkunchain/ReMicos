@@ -21,7 +21,7 @@ router.get('/registros', async (req, res) => {
     const fechaAct = new Date()
     const diaAct = fechaAct.getDay() + 1    
     const semAct = 45
-    const mesAct = fechaAct.getMonth()
+    const mesAct = fechaAct.getMonth() + 1
 
     console.log('dia: ',diaAct,'mes: ',mesAct)
     //console.log('semana: ',fechaAct.getWeek())
