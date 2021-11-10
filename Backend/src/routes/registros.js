@@ -39,12 +39,13 @@ router.get('/registros', async (req, res) => {
         }
     ])
 
-    const contarSem= await Registro.find({"aggre.semana": 45})
+    //const semanaCero = aggre.semana[0]
+    //const contarSem = await Registro.find({ aggre.semana[0] : 45})
+    const clienteAggre = Registro.find({"semana":45})
+    console.log('aggre: ', clienteAggre.semana)
 
-    console.log('aggre: ', aggre)
 
-
-    res.status(200).send({ Clientes, aggre, contarSem })
+    res.status(200).send({ Clientes, aggre })
     //res.header("Access-Control-Allow-Origin", "*");
     //res.header("Access-Control-Allow-Headers", "X-Requested-With");
     //next();
