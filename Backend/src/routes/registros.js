@@ -17,10 +17,11 @@ router.post('/add', async (req, res) => {
 router.get('/registros', async (req, res) => {
     //const Clientes = await Registro.findById(req.params.userid)
     const Clientes = await Registro.find()
+    const ClientesCount = await Registro.find().count()
     const fechaAct = new Date()
     const diaAct = fechaAct.getDay() + 1
     const semAct = 45
-    
+
     console.log('dia: ',fechaAct.getDay())
     //console.log('semana: ',fechaAct.getWeek())
 
@@ -85,7 +86,7 @@ router.get('/registros', async (req, res) => {
     //console.log('contarSem: ', contarSem)
 
 
-    res.status(200).send({ aggre, contSemAct, contDiaAct, Clientes })
+    res.status(200).send({ ClientesCount, contSemAct, contDiaAct, aggre, Clientes })
     //res.header("Access-Control-Allow-Origin", "*");
     //res.header("Access-Control-Allow-Headers", "X-Requested-With");
     //next();
