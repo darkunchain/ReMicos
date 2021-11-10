@@ -82,13 +82,15 @@ router.get('/registros', async (req, res) => {
     const contDiaSemAct = await Registro.aggregate([
         {
             "$project": {                
-                "dateDay" : { "$dayOfWeek" : "$isoDate"},                
+                "dateDay" : { "$dayOfWeek" : "$isoDate"},
+                "dateWeek": { "$week": "$isoDate" },
             }
         },
         {
             "$group": {
                 "_id" : "$_id",
                 "diaReg": { $first: "$dateDay"},
+                "semana": { $first: "$dateWeek"}
             }
         },
         {"$match": {"diaReg" : diaAct, "semana" : semAct}},
