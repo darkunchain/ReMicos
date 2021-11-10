@@ -21,11 +21,10 @@ router.get('/registros', async (req, res) => {
     const fechaAct = new Date()
     const diaAct = fechaAct.getDay() + 1    
     const semAct = 45
-    const mesAct = fechaAct.getMonth() + 1
-    const anioAct = 2020
-    //const anioAct = fechaAct.getFullYear()
+    const mesAct = fechaAct.getMonth() + 1    
+    const anioAct = fechaAct.getFullYear()
 
-    console.log('dia: ',diaAct,'mes: ',mesAct, 'año: ', anioAct)
+    //console.log('dia: ',diaAct,'mes: ',mesAct, 'año: ', anioAct)
     //console.log('semana: ',fechaAct.getWeek())
 
     
