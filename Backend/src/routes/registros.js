@@ -66,7 +66,7 @@ router.get('/registros', async (req, res) => {
             }
         },
         {"$match": {"diaReg" : diaAct}},
-        {$count: "count"}
+        {$count: "conteo"}
     ])
 
 
@@ -87,7 +87,7 @@ router.get('/registros', async (req, res) => {
             }
         },
         {"$match": {"diaReg" : diaAct, "semana" : semAct, "anio" : anioAct}},
-        {$count: "count"}
+        {$count: "conteo"}
     ])
 
     const contSemAct = await Registro.aggregate([
@@ -105,7 +105,7 @@ router.get('/registros', async (req, res) => {
             }
         },
         {"$match": {"semana" : semAct, "anio" : anioAct}},
-        {$count: "count"}
+        {$count: "conteo"}
     ])
 
     const contMesAct = await Registro.aggregate([
@@ -123,14 +123,20 @@ router.get('/registros', async (req, res) => {
             }
         },
         {"$match": {"mesReg" : mesAct, "anio" : anioAct}},
-        {$count: "count"}
+        {$count: "conteo"}
     ])
 
+    contMesNew = contMesAct[0].conteo
+    contSemNew = contSemAct[0].conteo
+    contDiaNew = contDiaAct[0].conteo
+    contHoyNew = contHoy[0].conteo
+
+
     
-    console.log('var1: ', ClientesCount,'var2: ', contMesAct,'var3: ', contSemAct,'var4: ', contDiaAct,'var5: ', contHoy)
+    console.log('var1: ', ClientesCount,'var2: ', contMesNew,'var3: ', contSemNew,'var4: ', contDiaNew,'var5: ', contHoyNew)
 
 
-    res.status(200).send({ ClientesCount, contMesAct, contSemAct, contDiaAct, contHoy, aggre, Clientes })
+    res.status(200).send({ ClientesCount, contMesNew, contSemNew, contDiaNew, contHoyNew, aggre, Clientes })
     //res.header("Access-Control-Allow-Origin", "*");
     //res.header("Access-Control-Allow-Headers", "X-Requested-With");
     //next();
