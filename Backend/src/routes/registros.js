@@ -19,8 +19,9 @@ router.get('/registros', async (req, res) => {
     const Clientes = await Registro.find()
     const ClientesCount = await Registro.find().count()
     const fechaAct = new Date()
-    const diaAct = fechaAct.getDay() + 1
+    const diaAct = fechaAct.getDay() + 1    
     const semAct = 45
+    const mesAct = fechaAct.getMonth()
 
     console.log('dia: ',fechaAct.getDay())
     //console.log('semana: ',fechaAct.getWeek())
@@ -47,21 +48,7 @@ router.get('/registros', async (req, res) => {
     ])
 
 
-    const contSemAct = await Registro.aggregate([
-        {
-            "$project": {                
-                "dateWeek": { "$week": "$isoDate" },                
-            }
-        },
-        {
-            "$group": {
-                "_id" : "$_id",
-                "semana": { $first: "$dateWeek"}                
-            }
-        },
-        {"$match": {"semana" : semAct}},
-        {$count: "count"}
-    ])
+    
 
     const contDiaAct = await Registro.aggregate([
         {
@@ -79,7 +66,12 @@ router.get('/registros', async (req, res) => {
         {$count: "count"}
     ])
 
-    const contDiaSemAct = await Registro.aggregate([
+
+
+
+
+
+    const contHoy = await Registro.aggregate([
         {
             "$project": {                
                 "dateDay" : { "$dayOfWeek" : "$isoDate"},
@@ -97,6 +89,38 @@ router.get('/registros', async (req, res) => {
         {$count: "count"}
     ])
 
+    const contSemAct = await Registro.aggregate([
+        {
+            "$project": {                
+                "dateWeek": { "$week": "$isoDate" },                
+            }
+        },
+        {
+            "$group": {
+                "_id" : "$_id",
+                "semana": { $first: "$dateWeek"}                
+            }
+        },
+        {"$match": {"semana" : semAct}},
+        {$count: "count"}
+    ])
+
+    const contMesAct = await Registro.aggregate([
+        {
+            "$project": {                
+                "dateMonth": { "$month": "$isoDate" },               
+            }
+        },
+        {
+            "$group": {
+                "_id" : "$_id",
+                "mesReg": { $first: "$dateMonth"},
+            }
+        },
+        {"$match": {"mesReg" : mesAct}},
+        {$count: "count"}
+    ])
+
     //const semanaCero = aggre.semana[0]
     //const contarSem = aggre.semana
 
@@ -104,7 +128,7 @@ router.get('/registros', async (req, res) => {
     //console.log('contarSem: ', contarSem)
 
 
-    res.status(200).send({ ClientesCount, contSemAct, contDiaAct, contDiaSemAct, aggre, Clientes })
+    res.status(200).send({ ClientesCount, contMesAct, contSemAct, contDiaAct, contHoy, aggre, Clientes })
     //res.header("Access-Control-Allow-Origin", "*");
     //res.header("Access-Control-Allow-Headers", "X-Requested-With");
     //next();
