@@ -79,6 +79,22 @@ router.get('/registros', async (req, res) => {
         {$count: "count"}
     ])
 
+    const contDiaSemAct = await Registro.aggregate([
+        {
+            "$project": {                
+                "dateDay" : { "$dayOfWeek" : "$isoDate"},                
+            }
+        },
+        {
+            "$group": {
+                "_id" : "$_id",
+                "diaReg": { $first: "$dateDay"},
+            }
+        },
+        {"$match": {"diaReg" : diaAct, "semana" : semAct}},
+        {$count: "count"}
+    ])
+
     //const semanaCero = aggre.semana[0]
     //const contarSem = aggre.semana
 
@@ -86,7 +102,7 @@ router.get('/registros', async (req, res) => {
     //console.log('contarSem: ', contarSem)
 
 
-    res.status(200).send({ ClientesCount, contSemAct, contDiaAct, aggre, Clientes })
+    res.status(200).send({ ClientesCount, contSemAct, contDiaAct, contDiaSemAct, aggre, Clientes })
     //res.header("Access-Control-Allow-Origin", "*");
     //res.header("Access-Control-Allow-Headers", "X-Requested-With");
     //next();
