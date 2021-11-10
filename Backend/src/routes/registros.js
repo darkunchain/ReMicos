@@ -23,7 +23,7 @@ router.get('/registros', async (req, res) => {
     const semAct = 45
     const mesAct = fechaAct.getMonth()
 
-    console.log('dia: ',fechaAct.getDay())
+    console.log('dia: ',diaAct,'mes: ',mesAct)
     //console.log('semana: ',fechaAct.getWeek())
 
     
