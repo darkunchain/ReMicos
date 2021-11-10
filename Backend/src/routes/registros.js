@@ -19,7 +19,8 @@ router.get('/registros', async (req, res) => {
     const Clientes = await Registro.find()
     const fechaAct = new Date()
     const diaAct = fechaAct.getDay() + 1
-    const semAct = 40
+    const semAct = 45
+    
     console.log('dia: ',fechaAct.getDay())
     //console.log('semana: ',fechaAct.getWeek())
 
