@@ -19,6 +19,7 @@ router.get('/registros', async (req, res) => {
     const Clientes = await Registro.find()
     const fechaAct = new Date()
     const diaAct = fechaAct.getDay()
+    const semAct = 40
     console.log('dia: ',fechaAct.getDay())
     //console.log('semana: ',fechaAct.getWeek())
 
@@ -28,6 +29,7 @@ router.get('/registros', async (req, res) => {
             "$project": {                
                 "dateWeek": { "$week": "$isoDate" },
                 "dateMonth": { "$month": "$isoDate" },
+                "dateDay" : { "$dayOfWeek" : "$isoDate"},
                 "Rank": 1
             }
         },
@@ -35,18 +37,54 @@ router.get('/registros', async (req, res) => {
             "$group": {
                 "_id" : "$_id",
                 "semana": { $first: "$dateWeek"},                
-                "mesReg": { $first: "$dateMonth"}
+                "mesReg": { $first: "$dateMonth"},
+                "diaReg": { $first: "$dateDay"},
             }
         }
+        
+    ])
+
+
+    const contSemAct = await Registro.aggregate([
+        {
+            "$project": {                
+                "dateWeek": { "$week": "$isoDate" },                
+            }
+        },
+        {
+            "$group": {
+                "_id" : "$_id",
+                "semana": { $first: "$dateWeek"}                
+            }
+        },
+        {"$match": {"semana" : semAct}},
+        {$count: "count"}
+    ])
+
+    const contDiaAct = await Registro.aggregate([
+        {
+            "$project": {                
+                "dateDay" : { "$dayOfWeek" : "$isoDate"},                
+            }
+        },
+        {
+            "$group": {
+                "_id" : "$_id",
+                "diaReg": { $first: "$dateDay"},
+            }
+        },
+        {"$match": {"diaReg" : diaAct}},
+        {$count: "count"}
     ])
 
     //const semanaCero = aggre.semana[0]
-    //const contarSem = await Registro.find({ aggre.semana[0] : 45})
+    //const contarSem = aggre.semana
+
     //const clienteAggre = Registro.find({"semana":45})
-    //console.log('aggre: ', clienteAggre)
+    //console.log('contarSem: ', contarSem)
 
 
-    res.status(200).send({ Clientes, aggre })
+    res.status(200).send({ aggre, contSemAct, contDiaAct, Clientes })
     //res.header("Access-Control-Allow-Origin", "*");
     //res.header("Access-Control-Allow-Headers", "X-Requested-With");
     //next();
