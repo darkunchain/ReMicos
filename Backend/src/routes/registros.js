@@ -18,7 +18,9 @@ router.get('/registros', async (req, res) => {
     //const Clientes = await Registro.findById(req.params.userid)
     const Clientes = await Registro.find()
     const fechaAct = new Date()
-    console.log(fechaAct.getDay())
+    console.log('dia: ',fechaAct.getDay())
+    //console.log('semana: ',fechaAct.getWeek())
+
     
     const aggre = await Registro.aggregate([
         {
@@ -37,8 +39,12 @@ router.get('/registros', async (req, res) => {
         }
     ])
 
+    const contarSem= await Registro.find({"aggre.semana": 45})
 
-    res.status(200).send({ Clientes, aggre })
+    console.log('aggre: ', aggre)
+
+
+    res.status(200).send({ Clientes, aggre, contarSem })
     //res.header("Access-Control-Allow-Origin", "*");
     //res.header("Access-Control-Allow-Headers", "X-Requested-With");
     //next();
