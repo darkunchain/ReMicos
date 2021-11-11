@@ -52,24 +52,7 @@ router.get('/registros', async (req, res) => {
 
 
     
-
-    const contDiaA = await Registro.aggregate([
-        {
-            "$project": {                
-                "dateDay" : { "$dayOfWeek" : "$isoDate"},                
-            }
-        },
-        {
-            "$group": {
-                "_id" : "$_id",
-                "diaReg": { $first: "$dateDay"},
-            }
-        },
-        {"$match": {"diaReg" : diaAct}},
-        {$count: "conteo"}
-    ])
-
-
+    
     const contHoyA = await Registro.aggregate([
         {
             "$project": {                
@@ -127,8 +110,7 @@ router.get('/registros', async (req, res) => {
     ])
 
     const contMesAct = contMesA[0].conteo
-    const contSemAct = contSemA[0].conteo
-    const contDiaAct = contDiaA[0].conteo
+    const contSemAct = contSemA[0].conteo    
     const contHoy = contHoyA[0].conteo
 
 
@@ -136,7 +118,7 @@ router.get('/registros', async (req, res) => {
     
 
 
-    res.status(200).send({ ClientesCount, contMesAct, contSemAct, contDiaAct, contHoy, aggre, Clientes })
+    res.status(200).send({ ClientesCount, contMesAct, contSemAct, contHoy, aggre, Clientes })
     //res.header("Access-Control-Allow-Origin", "*");
     //res.header("Access-Control-Allow-Headers", "X-Requested-With");
     //next();
