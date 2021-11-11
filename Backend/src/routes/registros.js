@@ -112,6 +112,7 @@ router.get('/registros', async (req, res) => {
     const contMesAct = contMesA[0].conteo
     const contSemAct = contSemA[0].conteo    
     const contHoy = contHoyA[0].conteo
+    console.log('contHoy: ', contHoy)
 
 
     
