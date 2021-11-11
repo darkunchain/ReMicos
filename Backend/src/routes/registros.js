@@ -144,6 +144,34 @@ router.get('/registros', async (req, res) => {
         if(typeof diaDelMesA[0] === 'undefined') perDias[i] = 0
         else perDias[i] = diaDelMesA[0].Total
     }   
+
+
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica por meses  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+    
+    var perMes = []    
+    
+    for(var i = 0 ; i < 12; i++){
+        const perMesA = await Registro.aggregate([
+            {
+                "$project": {
+                    "dateMonth": { "$month": "$isoDate" },
+                    "dateYear": { "$year": "$isoDate" },
+                }
+            },
+            {
+                "$group": {
+                    "_id": "$_id",
+                    "mesReg": { $first: "$dateMonth" },
+                    "anio": { $first: "$dateYear" },
+                }
+            },
+            { "$match": { "mesReg": i+1, "anio": anioAct } },
+            { $count: "conteo" }
+        ])
+        if(typeof perMesA[0] === 'undefined') perMes[i] = 0
+        else perMes[i] = perMesA[0].conteo
+    }
+    console.log('perMes: ',perMes)
     
     
 
@@ -155,7 +183,8 @@ router.get('/registros', async (req, res) => {
         contMesAct,
         contSemAct,
         contHoy,
-        perDias,         
+        perDias,
+        perMes,
         Clientes
     })
     //res.header("Access-Control-Allow-Origin", "*");
