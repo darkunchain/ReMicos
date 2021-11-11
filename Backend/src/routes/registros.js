@@ -28,33 +28,7 @@ router.get('/registros', async (req, res) => {
     var contHoy = {}
     var mesArray = []
 
-    //console.log('dia: ',diaAct,'mes: ',mesAct, 'año: ', anioAct)
-    //console.log('semana: ',fechaAct.getWeek())
-
-
-    /* const aggre = await Registro.aggregate([
-        {
-            "$project": {                
-                "dateWeek": { "$week": "$isoDate" },
-                "dateMonth": { "$month": "$isoDate" },
-                "dateDay" : { "$dayOfWeek" : "$isoDate"},
-                "dateYear" : { "$year" : "$isoDate"},
-                "Rank": 1
-            }
-        },
-        {
-            "$group": {
-                "_id" : "$_id",
-                "semana": { $first: "$dateWeek"},                
-                "mesReg": { $first: "$dateMonth"},
-                "diaReg": { $first: "$dateDay"},
-                "anoReg": { $first: "$dateYear"},
-            }
-        }
-        
-    ])
- */
-
+   
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica cilindro  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 
     const contHoyA = await Registro.aggregate([
@@ -170,8 +144,39 @@ router.get('/registros', async (req, res) => {
         ])
         if(typeof perMesA[0] === 'undefined') perMes[i] = 0
         else perMes[i] = perMesA[0].conteo
+    }    
+
+
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica por dias de la semana este mes  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+    
+    var perDiaSemMesAct = []    
+    
+    for(var i = 0 ; i < 7; i++){
+        const perDiaSemMesActA = await Registro.aggregate([
+            {
+                "$project": {
+                    "dateDay": { "$dayOfWeek": "$isoDate" },
+                    "dateMonth": { "$month": "$isoDate" },
+                    "dateYear": { "$year": "$isoDate" },
+                }
+            },
+            {
+                "$group": {
+                    "_id": "$_id",
+                    "diaReg": { $first: "$dateDay" },
+                    "mes": { $first: "$dateMonth" },
+                    "anio": { $first: "$dateYear" },
+                }
+            },
+            { "$match": { "diaReg": i+1, "anio": mesAct, "anio": anioAct } },
+            { $count: "conteo" }
+        ])
+        if(typeof perDiaSemMesActA[0] === 'undefined') perDiaSemMesAct[i] = 0
+        else perDiaSemMesAct[i] = perDiaSemMesActA[0].conteo
     }
-    console.log('perMes: ',perMes)
+    console.log('perDiaSemMesAct: ',perDiaSemMesAct)
+
+    //console.log('clientes: ',Clientes)
     
     
 
