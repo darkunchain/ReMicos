@@ -190,11 +190,34 @@ router.get('/registros', async (req, res) => {
         contHoy,
         perDias,
         perMes,
+        perDiaSemMesAct,
         Clientes
     })
     //res.header("Access-Control-Allow-Origin", "*");
     //res.header("Access-Control-Allow-Headers", "X-Requested-With");
     //next();
 })
+
+
+
+
+
+
+
+
+router.get('/registros/:mes/:anio', async (req, res) => {
+
+    var variable = 5
+    
+    
+    res.status(200).send({
+        variable
+    })
+})
+
+
+
+
+
 
 module.exports = router;
