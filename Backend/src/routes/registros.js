@@ -87,9 +87,14 @@ router.get('/registros', async (req, res) => {
         { $count: "conteo" }
     ])
     //console.log('contMesA: ', contMesA,'contSemA: ', contSemA,'contHoyA: ', contHoyA)
-    contMesAct = contMesA[0].conteo
-    contSemAct = contSemA[0].conteo
-    contHoy = contHoyA[0].conteo
+    if(typeof contHoy === 'undefined') contHoy = 0
+    else contHoy = contHoyA[0].conteo
+    if(typeof contMesAct === 'undefined') contMesAct = 0
+    else contMesAct = contMesA[0].conteo
+    if(typeof contSemAct === 'undefined') contSemAct = 0
+    else contSemAct = contSemA[0].conteo
+
+    
 
 
     //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica por dias  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
