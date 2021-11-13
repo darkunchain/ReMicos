@@ -88,11 +88,11 @@ router.get('/registros', async (req, res) => {
     ])
     //console.log('contMesA: ', contMesA,'contSemA: ', contSemA,'contHoyA: ', contHoyA)
     console.log('contHoy: ', typeof contHoyA[0])
-    if(typeof contHoyA[0] === 'undefined') {console.log(hola); contHoy = 0}
+    if(typeof contHoyA[0] === 'undefined') contHoy = 0
     else contHoy = contHoyA[0].conteo
-    if(typeof contMesAct === 'undefined') contMesAct = 0
+    if(typeof contMesA[0] === 'undefined') contMesAct = 0
     else contMesAct = contMesA[0].conteo
-    if(typeof contSemAct === 'undefined') contSemAct = 0
+    if(typeof contSemA[0] === 'undefined') contSemAct = 0
     else contSemAct = contSemA[0].conteo
 
     
