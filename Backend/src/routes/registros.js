@@ -282,7 +282,8 @@ const cont60 = await Registro.aggregate([
         "anio": { $first: "$dateYear" },
     }
 },
-{ "$match": { "semana": semAct, "anio": anioAct } },
+{ "$match": { "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
+{ $count: "conteo" }
 
 ])
     console.log('cont15:',cont15,'cont30:',cont30,'cont60:',cont60)
