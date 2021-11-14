@@ -225,8 +225,8 @@ router.get('/ingresos', async (req, res) => {
 
        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica costos  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
        console.log("diaReg", diaAct, "semana", semAct, "anio", anioAct )
-       const cont15 = await Registro.aggregate([
-        
+       
+       const cont15 = await Registro.aggregate([        
         {
         "$project": {
             "dateDay": { "$dayOfWeek": "$isoDate" },
@@ -285,7 +285,7 @@ const cont60 = await Registro.aggregate([
 { "$match": { "semana": semAct, "anio": anioAct } },
 
 ])
-    console.log('cont15:',cont15,'cont30:',cont30,'cont15:',cont60)
+    console.log('cont15:',cont15,'cont30:',cont30,'cont60:',cont60)
     if(typeof cont15[0] === 'undefined') cont15Hoy = 0
     else cont15Hoy = cont15[0].conteo
     if(typeof cont30[0] === 'undefined') cont30Hoy = 0
