@@ -228,7 +228,7 @@ router.get('/ingresos', async (req, res) => {
        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica costos  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
        console.log("diaReg", diaAct, "semana", semAct, "anio", anioAct )
        
-       const cont15 = await Registro.aggregate([        
+       const cont15 = await Cli15.aggregate([        
         {
         "$project": {
             "dateDay": { "$dayOfWeek": "$isoDate" },
