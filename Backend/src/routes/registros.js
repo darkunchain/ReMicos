@@ -206,7 +206,9 @@ router.get('/registros', async (req, res) => {
 
 
 router.get('/ingresos', async (req, res) => {
-    const Clientes = await Registro.find({'tiempo':1800})
+    const Cli15 = await Registro.find({'tiempo':900})
+    const Cli30 = await Registro.find({'tiempo':1800})
+    const Cli60 = await Registro.find({'tiempo':3600})
     const semAct = getNumberOfWeek('2021-11-13T09:10:04.767Z') - 1    
     const fechaAct = new Date()
     console.log(semAct)
@@ -300,7 +302,9 @@ const cont60 = await Registro.aggregate([
         cont15Hoy,
         cont30Hoy,
         cont60Hoy,
-        Clientes
+        Cli15,
+        Cli30,
+        Cli60
     })
 
 })
