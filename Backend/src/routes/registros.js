@@ -214,7 +214,8 @@ router.get('/ingresos', async (req, res) => {
     console.log(semAct)
     const diaAct = fechaAct.getDay() + 1
     const anioAct = fechaAct.getFullYear()
-    
+    const diaHoy = fechaAct.getDate()
+    console.log(diaHoy)
 
     function getNumberOfWeek(date) {
         const today = new Date(date);
@@ -228,7 +229,7 @@ router.get('/ingresos', async (req, res) => {
        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica costos  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
        console.log("diaReg", diaAct, "semana", semAct, "anio", anioAct )
        
-       const cont15 = await Cli15.aggregate([        
+       const cont15 = await Registro.aggregate([        
         {
         "$project": {
             "dateDay": { "$dayOfWeek": "$isoDate" },
@@ -245,7 +246,7 @@ router.get('/ingresos', async (req, res) => {
             }
         },
         { "$match": { "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
-        { $count: "conteo" }
+        
     ])
 
     const cont30 = await Registro.aggregate([        {
