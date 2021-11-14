@@ -212,29 +212,23 @@ router.get('/ingresos', async (req, res) => {
 
     const semAct = getNumberOfWeek() - 1
     const fechaAct = new Date()
-    const diaAct = fechaAct.getDay() + 1
-    //const semAct = 45
-    const mesAct = fechaAct.getMonth() + 1    
+    const diaAct = fechaAct.getDay() + 1   
     const anioAct = fechaAct.getFullYear()
-    var contMesAct = {}
-    var contSemAct = {}
-    var contHoy = {}
-    var mesArray = []
+    
 
     function getNumberOfWeek() {
         const today = new Date();        
         const firstDayOfYear = new Date(today.getFullYear(), 0, 1);        
         const pastDaysOfYear = ((today - firstDayOfYear) / 86400000);        
         return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay()) / 7);
-    }
+    }   
 
     
 
-    console.log('semana: ',semana)
-
        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica costos  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 
-       const cont15 = await Registro.aggregate([        {
+       const cont15 = await Registro.aggregate([
+           {
             "$project": {
                 "dateDay": { "$dayOfWeek": "$isoDate" },
                 "dateWeek": { "$week": "$isoDate" },
