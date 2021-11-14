@@ -182,12 +182,6 @@ router.get('/registros', async (req, res) => {
     }
     console.log('perDiaSemMesAct: ',perDiaSemMesAct)
 
-    //console.log('clientes: ',Clientes)
-    
-    
-
-    
-
 
     res.status(200).send({
         ClientesCount,
@@ -205,7 +199,83 @@ router.get('/registros', async (req, res) => {
 })
 
 
+router.get('/ingresos', async (req, res) => {
 
+       //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica costos  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+
+       const cont15 = await Registro.aggregate([        {
+            "$project": {
+                "dateDay": { "$dayOfWeek": "$isoDate" },
+                "dateWeek": { "$week": "$isoDate" },
+                "dateYear": { "$year": "$isoDate" },
+            }
+        },
+        {
+            "$group": {
+                "_id": "$_id",
+                "diaReg": { $first: "$dateDay" },
+                "semana": { $first: "$dateWeek" },
+                "anio": { $first: "$dateYear" },
+            }
+        },
+        { "$match": { "tiempo" : 15, "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
+        { $count: "conteo" }
+    ])
+
+    const cont30 = await Registro.aggregate([        {
+        "$project": {
+            "dateDay": { "$dayOfWeek": "$isoDate" },
+            "dateWeek": { "$week": "$isoDate" },
+            "dateYear": { "$year": "$isoDate" },
+        }
+    },
+    {
+        "$group": {
+            "_id": "$_id",
+            "diaReg": { $first: "$dateDay" },
+            "semana": { $first: "$dateWeek" },
+            "anio": { $first: "$dateYear" },
+        }
+    },
+    { "$match": { "tiempo" : 30, "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
+    { $count: "conteo" }
+])
+
+const cont60 = await Registro.aggregate([        {
+    "$project": {
+        "dateDay": { "$dayOfWeek": "$isoDate" },
+        "dateWeek": { "$week": "$isoDate" },
+        "dateYear": { "$year": "$isoDate" },
+    }
+},
+{
+    "$group": {
+        "_id": "$_id",
+        "diaReg": { $first: "$dateDay" },
+        "semana": { $first: "$dateWeek" },
+        "anio": { $first: "$dateYear" },
+    }
+},
+{ "$match": { "tiempo" : 60, "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
+{ $count: "conteo" }
+])
+
+    if(typeof cont15[0] === 'undefined') cont15Hoy = 0
+    else cont15Hoy = cont15[0].conteo
+    if(typeof cont30[0] === 'undefined') cont30Hoy = 0
+    else cont30Hoy = cont30[0].conteo
+    if(typeof cont60[0] === 'undefined') cont60Hoy = 0
+    else cont60Hoy = cont60[0].conteo
+
+
+
+    res.status(200).send({
+        cont15Hoy,
+        cont30Hoy,
+        cont60Hoy
+    })
+
+})
 
 
 
