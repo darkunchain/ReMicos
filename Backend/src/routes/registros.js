@@ -210,14 +210,15 @@ router.get('/registros', async (req, res) => {
 
 router.get('/ingresos', async (req, res) => {
 
-    const semAct = getNumberOfWeek() - 1
+    const semAct = getNumberOfWeek('2021-11-13T09:10:04.767Z') - 1    
     const fechaAct = new Date()
+    console.log(semAct)
     const diaAct = fechaAct.getDay() + 1   
     const anioAct = fechaAct.getFullYear()
     
 
-    function getNumberOfWeek() {
-        const today = new Date();        
+    function getNumberOfWeek(date) {
+        const today = new Date(date);        
         const firstDayOfYear = new Date(today.getFullYear(), 0, 1);        
         const pastDaysOfYear = ((today - firstDayOfYear) / 86400000);        
         return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay()) / 7);
