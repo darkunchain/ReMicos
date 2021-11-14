@@ -206,7 +206,7 @@ router.get('/registros', async (req, res) => {
 
 
 router.get('/ingresos', async (req, res) => {
-
+    const Clientes = await Registro.find()
     const semAct = getNumberOfWeek('2021-11-13T09:10:04.767Z') - 1    
     const fechaAct = new Date()
     console.log(semAct)
@@ -298,7 +298,8 @@ const cont60 = await Registro.aggregate([
     res.status(200).send({
         cont15Hoy,
         cont30Hoy,
-        cont60Hoy
+        cont60Hoy,
+        Clientes
     })
 
 })
