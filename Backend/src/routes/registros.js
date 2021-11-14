@@ -206,7 +206,7 @@ router.get('/registros', async (req, res) => {
 
 
 router.get('/ingresos', async (req, res) => {
-    const Clientes = await Registro.find()
+    const Clientes = await Registro.find({'tiempo':1800})
     const semAct = getNumberOfWeek('2021-11-13T09:10:04.767Z') - 1    
     const fechaAct = new Date()
     console.log(semAct)
