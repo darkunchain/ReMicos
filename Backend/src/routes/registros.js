@@ -207,8 +207,6 @@ router.get('/registros', async (req, res) => {
 
 router.get('/ingresos', async (req, res) => {
     
-    const Cli30 = await Registro.find({'tiempo':1800})
-    const Cli60 = await Registro.find({'tiempo':3600})
     const semAct = getNumberOfWeek('2021-11-13T09:10:04.767Z') - 1    
     const fechaAct = new Date()
     console.log(semAct)
@@ -228,91 +226,26 @@ router.get('/ingresos', async (req, res) => {
     const startOfDay = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
     const endOfDay = new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
 
-    queryObj.createdAt = {
+    const obj = queryObj.isoDate = {
         $gte: startOfDay, // 2019-11-08T00:00:00.000Z
         $lt: endOfDay // 2019-11-08T23:59:59.999Z
       }
 
-    let cli15 = Registro.find({'tiempo': 900, obj})
+        const Cli15 = await Registro.find({'tiempo': 900,'isoDate':obj}).count()
+      console.log(Cli15)
 
+      const Cli30 = await Registro.find({'tiempo': 1800,'isoDate':obj}).count()
+      console.log(Cli30)
 
-       //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica costos  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
-       console.log("diaReg", diaAct, "semana", semAct, "anio", anioAct )
-       
-       const cont15 = await Registro.aggregate([        
-        {
-        "$project": {
-            "dateDay": { "$dayOfMonth": "$isoDate" },
-            "dateWeek": { "$week": "$isoDate" },
-            "dateYear": { "$year": "$isoDate" },
-        }
-        },
-        {
-            "$group": {
-                "_id": "$_id",
-                "diaReg": { $first: "$dateDay" },
-                "semana": { $first: "$dateWeek" },
-                "anio": { $first: "$dateYear" },
-            }
-        },
-        { "$match": { "diaReg": diaHoy, "semana": semAct, "anio": anioAct } },
-        
-    ])
+      const Cli60 = await Registro.find({'tiempo': 3600,'isoDate':obj}).count()
+      console.log(Cli60)
 
-    const cont30 = await Registro.aggregate([        {
-        "$project": {
-            "dateDay": { "$dayOfWeek": "$isoDate" },
-            "dateWeek": { "$week": "$isoDate" },
-            "dateYear": { "$year": "$isoDate" },
-        }
-    },
-    {
-        "$group": {
-            "_id": "$_id",
-            "diaReg": { $first: "$dateDay" },
-            "semana": { $first: "$dateWeek" },
-            "anio": { $first: "$dateYear" },
-        }
-    },
-    { "$match": { "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
-    { $count: "conteo" }
-])
-
-const cont60 = await Registro.aggregate([
+      
     
-    {
-    "$project": {
-        "dateDay": { "$dayOfWeek": "$isoDate" },
-        "dateWeek": { "$week": "$isoDate" },
-        "dateYear": { "$year": "$isoDate" },
-    }
-},
-{
-    "$group": {
-        "_id": "$_id",
-        "diaReg": { $first: "$dateDay" },
-        "semana": { $first: "$dateWeek" },
-        "anio": { $first: "$dateYear" },
-    }
-},
-{ "$match": { "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
-{ $count: "conteo" }
-
-])
-    console.log('cont15:',cont15,'cont30:',cont30,'cont60:',cont60)
-    if(typeof cont15[0] === 'undefined') cont15Hoy = 0
-    else cont15Hoy = cont15[0].conteo
-    if(typeof cont30[0] === 'undefined') cont30Hoy = 0
-    else cont30Hoy = cont30[0].conteo
-    if(typeof cont60[0] === 'undefined') cont60Hoy = 0
-    else cont60Hoy = cont60[0].conteo
+    
 
 
-
-    res.status(200).send({
-        cont15Hoy,
-        cont30Hoy,
-        cont60Hoy,
+    res.status(200).send({        
         Cli15,
         Cli30,
         Cli60
