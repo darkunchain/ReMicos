@@ -16,12 +16,12 @@ router.post('/add', async (req, res) => {
 
 router.get('/registros', async (req, res) => {
     //const Clientes = await Registro.findById(req.params.userid)
-    const semAct = getNumberOfWeek() - 1
+    
     const Clientes = await Registro.find()
     const ClientesCount = await Registro.find().count()
     const fechaAct = new Date()
     const diaAct = fechaAct.getDay() + 1
-    //const semAct = 45
+    const semAct = getNumberOfWeek() - 1    
     const mesAct = fechaAct.getMonth() + 1    
     const anioAct = fechaAct.getFullYear()
     var contMesAct = {}
@@ -201,10 +201,7 @@ router.get('/registros', async (req, res) => {
         perMes,
         perDiaSemMesAct,
         Clientes
-    })
-    //res.header("Access-Control-Allow-Origin", "*");
-    //res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    //next();
+    })    
 })
 
 
@@ -213,28 +210,29 @@ router.get('/ingresos', async (req, res) => {
     const semAct = getNumberOfWeek('2021-11-13T09:10:04.767Z') - 1    
     const fechaAct = new Date()
     console.log(semAct)
-    const diaAct = fechaAct.getDay() + 1   
+    const diaAct = fechaAct.getDay() + 1
     const anioAct = fechaAct.getFullYear()
     
 
     function getNumberOfWeek(date) {
-        const today = new Date(date);        
-        const firstDayOfYear = new Date(today.getFullYear(), 0, 1);        
-        const pastDaysOfYear = ((today - firstDayOfYear) / 86400000);        
+        const today = new Date(date);
+        const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+        const pastDaysOfYear = ((today - firstDayOfYear) / 86400000);
         return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay()) / 7);
     }   
 
     
 
        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica costos  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
-
+       console.log("diaReg", diaAct, "semana", semAct, "anio", anioAct )
        const cont15 = await Registro.aggregate([
-           {
-            "$project": {
-                "dateDay": { "$dayOfWeek": "$isoDate" },
-                "dateWeek": { "$week": "$isoDate" },
-                "dateYear": { "$year": "$isoDate" },
-            }
+        
+        {
+        "$project": {
+            "dateDay": { "$dayOfWeek": "$isoDate" },
+            "dateWeek": { "$week": "$isoDate" },
+            "dateYear": { "$year": "$isoDate" },
+        }
         },
         {
             "$group": {
@@ -244,7 +242,7 @@ router.get('/ingresos', async (req, res) => {
                 "anio": { $first: "$dateYear" },
             }
         },
-        { "$match": { "tiempo" : 15, "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
+        { "$match": { "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
         { $count: "conteo" }
     ])
 
@@ -263,11 +261,13 @@ router.get('/ingresos', async (req, res) => {
             "anio": { $first: "$dateYear" },
         }
     },
-    { "$match": { "tiempo" : 30, "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
+    { "$match": { "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
     { $count: "conteo" }
 ])
 
-const cont60 = await Registro.aggregate([        {
+const cont60 = await Registro.aggregate([
+    
+    {
     "$project": {
         "dateDay": { "$dayOfWeek": "$isoDate" },
         "dateWeek": { "$week": "$isoDate" },
@@ -282,10 +282,10 @@ const cont60 = await Registro.aggregate([        {
         "anio": { $first: "$dateYear" },
     }
 },
-{ "$match": { "tiempo" : 60, "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
-{ $count: "conteo" }
-])
+{ "$match": { "semana": semAct, "anio": anioAct } },
 
+])
+    console.log('cont15:',cont15,'cont30:',cont30,'cont15:',cont60)
     if(typeof cont15[0] === 'undefined') cont15Hoy = 0
     else cont15Hoy = cont15[0].conteo
     if(typeof cont30[0] === 'undefined') cont30Hoy = 0
