@@ -232,7 +232,7 @@ router.get('/ingresos', async (req, res) => {
        const cont15 = await Registro.aggregate([        
         {
         "$project": {
-            "dateDay": { "$dayOfWeek": "$isoDate" },
+            "dateDay": { "$dayOfMonth": "$isoDate" },
             "dateWeek": { "$week": "$isoDate" },
             "dateYear": { "$year": "$isoDate" },
         }
@@ -245,7 +245,7 @@ router.get('/ingresos', async (req, res) => {
                 "anio": { $first: "$dateYear" },
             }
         },
-        { "$match": { "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
+        { "$match": { "diaReg": diaHoy, "semana": semAct, "anio": anioAct } },
         
     ])
 
