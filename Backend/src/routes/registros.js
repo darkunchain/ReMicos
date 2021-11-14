@@ -206,7 +206,7 @@ router.get('/registros', async (req, res) => {
 
 
 router.get('/ingresos', async (req, res) => {
-    const Cli15 = await Registro.find({'tiempo':900})
+    
     const Cli30 = await Registro.find({'tiempo':1800})
     const Cli60 = await Registro.find({'tiempo':3600})
     const semAct = getNumberOfWeek('2021-11-13T09:10:04.767Z') - 1    
@@ -224,7 +224,17 @@ router.get('/ingresos', async (req, res) => {
         return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay()) / 7);
     }   
 
-    
+    let queryObj = {}
+    const startOfDay = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
+    const endOfDay = new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
+
+    queryObj.createdAt = {
+        $gte: startOfDay, // 2019-11-08T00:00:00.000Z
+        $lt: endOfDay // 2019-11-08T23:59:59.999Z
+      }
+
+    let cli15 = Registro.find({'tiempo': 900, obj})
+
 
        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica costos  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
        console.log("diaReg", diaAct, "semana", semAct, "anio", anioAct )
