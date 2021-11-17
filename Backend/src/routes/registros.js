@@ -241,12 +241,7 @@ router.get('/ingresos', async (req, res) => {
       console.log(Cli60)
 
       const ClientesHoy = await Registro.find({'isoDate':obj})
-      console.log(ClientesHoy)
-
-      
-    
-    
-
+      console.log(ClientesHoy) 
 
     res.status(200).send({        
         Cli15,
