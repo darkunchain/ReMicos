@@ -220,6 +220,7 @@ router.get('/ingresos', async (req, res) => {
         const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
         const pastDaysOfYear = ((today - firstDayOfYear) / 86400000);
         return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay()) / 7);
+        
     }   
 
     let queryObj = {}
