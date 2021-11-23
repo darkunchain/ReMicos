@@ -214,7 +214,7 @@ router.get('/ingresos', async (req, res) => {
     fechaYes.setDate(fechaYes.getDate() - 1);
     fechaTom.setDate(fechaTom.getDate() + 1);
     
-    //const semAct = getNumberOfWeek(fechaAct) - 1
+    const semAct = getNumberOfWeek(fechaAct) - 1
 
     console.log('fechaAct: ',fechaAct)
     const diaAct = fechaAct.getDay() + 1
@@ -222,7 +222,7 @@ router.get('/ingresos', async (req, res) => {
     const diaHoy = fechaAct.getDate()
     const diaYes = fechaYes.getDate()
     const diaTom = fechaTom.getDate()
-    console.log('diaHoy: ',diaHoy,'diaYes: ',diaYes,'diaTom: ',diaTom,'fechaYes: ',fechaYes,'fechaTom: ',fechaTom,'anioAct: ',anioAct, 'diaAct: ',diaAct)
+    console.log('diaHoy:',diaHoy,' diaYes:',diaYes,' diaTom:',diaTom,' fechaYes:',fechaYes,' fechaTom:',fechaTom,' anioAct:',anioAct, ' diaAct:',diaAct,' semAct:',semAct)
 
 
     function getNumberOfWeek(date) {
