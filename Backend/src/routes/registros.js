@@ -207,9 +207,11 @@ router.get('/registros', async (req, res) => {
 
 router.get('/ingresos', async (req, res) => {
     
-    const semAct = getNumberOfWeek('2021-11-13T09:10:04.767Z') - 1    
+        
     const fechaAct = new Date()
-    console.log('semAct: ',semAct)
+    //const semAct = getNumberOfWeek(fechaAct) - 1
+
+    console.log('fechaAct: ',fechaAct,'semAct: ',semAct)
     const diaAct = fechaAct.getDay() + 1
     const anioAct = fechaAct.getFullYear()
     const diaHoy = fechaAct.getDate()
@@ -225,8 +227,8 @@ router.get('/ingresos', async (req, res) => {
     }   
 
     let queryObj = {}
-    const startOfDay = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
-    const endOfDay = new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
+    const startOfDay = new Date(new Date().setUTCHours(05, 0, 0, 0)).toISOString()
+    const endOfDay = new Date(new Date().setUTCHours(04, 59, 59, 999)).toISOString()
 
     console.log('startOfDay: ', startOfDay, 'endOfDay: ',endOfDay)
 
