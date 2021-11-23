@@ -228,7 +228,7 @@ router.get('/ingresos', async (req, res) => {
 
     let queryObj = {}
     const startOfDay = new Date(new Date().setUTCHours(05, 0, 0, 0)).toISOString()
-    const endOfDay = new Date(new Date().setUTCHours(04, 59, 59, 999)).toISOString()
+    const endOfDay = new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
 
     console.log('startOfDay: ', startOfDay, 'endOfDay: ',endOfDay)
 
