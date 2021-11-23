@@ -211,7 +211,7 @@ router.get('/ingresos', async (req, res) => {
     const fechaAct = new Date()
     //const semAct = getNumberOfWeek(fechaAct) - 1
 
-    console.log('fechaAct: ',fechaAct,'semAct: ',semAct)
+    console.log('fechaAct: ',fechaAct)
     const diaAct = fechaAct.getDay() + 1
     const anioAct = fechaAct.getFullYear()
     const diaHoy = fechaAct.getDate()
