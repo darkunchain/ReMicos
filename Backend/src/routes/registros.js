@@ -209,23 +209,26 @@ router.get('/ingresos', async (req, res) => {
     
     const semAct = getNumberOfWeek('2021-11-13T09:10:04.767Z') - 1    
     const fechaAct = new Date()
-    console.log(semAct)
+    console.log('semAct: ',semAct)
     const diaAct = fechaAct.getDay() + 1
     const anioAct = fechaAct.getFullYear()
     const diaHoy = fechaAct.getDate()
-    console.log(diaHoy)
+    console.log('diaHoy: ',diaHoy,'anioAct: ',anioAct, 'diaAct: ',diaAct)
+
 
     function getNumberOfWeek(date) {
         const today = new Date(date);
         const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
         const pastDaysOfYear = ((today - firstDayOfYear) / 86400000);
         return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay()) / 7);
-        
+
     }   
 
     let queryObj = {}
     const startOfDay = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
     const endOfDay = new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
+
+    console.log('startOfDay: ', startOfDay, 'endOfDay: ',endOfDay)
 
     const obj = queryObj.isoDate = {
         $gte: startOfDay, // 2019-11-08T00:00:00.000Z
