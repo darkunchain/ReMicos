@@ -208,11 +208,8 @@ router.get('/registros', async (req, res) => {
 router.get('/ingresos', async (req, res) => {
     
         
-    const fechaAct = new Date()
-    const fechaYes = new Date()
-    const fechaTom = new Date()
-    fechaYes.setDate(fechaYes.getDate() - 1);
-    fechaTom.setDate(fechaTom.getDate() + 1);
+    const fechaAct = new Date()    
+    fechaAct.setUTCHours(-5);
     
     const semAct = getNumberOfWeek(fechaAct) - 1
 
@@ -220,9 +217,8 @@ router.get('/ingresos', async (req, res) => {
     const diaAct = fechaAct.getDay() + 1
     const anioAct = fechaAct.getFullYear()
     const diaHoy = fechaAct.getDate()
-    const diaYes = fechaYes.getDate()
-    const diaTom = fechaTom.getDate()
-    console.log('diaHoy:',diaHoy,' diaYes:',diaYes,' diaTom:',diaTom,' fechaYes:',fechaYes,' fechaTom:',fechaTom,' anioAct:',anioAct, ' diaAct:',diaAct,' semAct:',semAct)
+    
+    console.log('diaHoy:',diaHoy,' anioAct:',anioAct, ' diaAct:',diaAct,' semAct:',semAct)
 
 
     function getNumberOfWeek(date) {
@@ -234,8 +230,8 @@ router.get('/ingresos', async (req, res) => {
     }   
 
     let queryObj = {}
-    const startOfDay = new Date(fechaAct.setUTCHours(5, 0, 0, 0)).toISOString()
-    const endOfDay = new Date(fechaTom.setUTCHours(4, 59, 59, 999)).toISOString()
+    const startOfDay = new Date(fechaAct.setUTCHours(0, 0, 0, 0)).toISOString()
+    const endOfDay = new Date(fechaAct.setUTCHours(23, 59, 59, 999)).toISOString()
 
     console.log('startOfDay: ', startOfDay, 'endOfDay: ',endOfDay)
 
