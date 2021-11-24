@@ -244,6 +244,8 @@ router.get('/ingresos', async (req, res) => {
         $lt: endOfDay // 2019-11-08T23:59:59.999Z
       }
 
+      console.log(' obj:',obj)
+
         const Cli15 = await Registro.find({'tiempo': 900,'isoDate':obj}).count()
       console.log(Cli15)
 
