@@ -265,6 +265,19 @@ router.get('/ingresos', async (req, res) => {
 
 })
 
+router.get('/graf1', async (req, res) => {
+
+    Cli15 = 0
+
+
+
+    res.status(200).send({        
+        Cli15,
+        
+    })
+
+})
+
 
 
 
