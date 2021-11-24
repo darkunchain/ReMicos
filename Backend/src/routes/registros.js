@@ -210,13 +210,13 @@ router.get('/ingresos', async (req, res) => {
         
     const fechaAct = new Date()
     console.log('fechaAct: ',fechaAct)
-    const hora = fechaAct.getHours() 
-    console.log('hora: ',hora)
-    fechaAct.setUTCHours(7);
+    fechaAct.setTime( fechaAct.getTime() - fechaAct.getTimezoneOffset()*60*1000 )
+    console.log('fechaAct: ',fechaAct)
+
     
     const semAct = getNumberOfWeek(fechaAct) - 1
 
-    console.log('fechaAct: ',fechaAct)
+    
     const diaAct = fechaAct.getDay() + 1
     const anioAct = fechaAct.getFullYear()
     const diaHoy = fechaAct.getDate()
