@@ -258,7 +258,9 @@ router.get('/ingresos', async (req, res) => {
         Cli15,
         Cli30,
         Cli60,
-        ClientesHoy
+        ClientesHoy,
+        startOfDay,
+        endOfDay
     })
 
 })
