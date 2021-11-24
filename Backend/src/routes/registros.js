@@ -210,7 +210,7 @@ router.get('/ingresos', async (req, res) => {
         
     const fechaAct = new Date()
     console.log('fechaAct: ',fechaAct)
-    fechaAct.setUTCHours(5);
+    fechaAct.setUTCHours(7);
     
     const semAct = getNumberOfWeek(fechaAct) - 1
 
