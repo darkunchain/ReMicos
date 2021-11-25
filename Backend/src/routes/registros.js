@@ -19,7 +19,9 @@ router.get('/registros', async (req, res) => {
 
     const Clientes = await Registro.find()
     const ClientesCount = await Registro.find().count()
-    const fechaAct = new Date()
+    const fechaAct = new Date();
+    fechaAct.setTime(fechaAct.getTime() - fechaAct.getTimezoneOffset() * 60 * 1000)
+    console.log('fechaAct_regitros:', fechaAct)
     const diaAct = fechaAct.getDay() + 1
     const semAct = getNumberOfWeek() - 1
     const mesAct = fechaAct.getMonth() + 1
@@ -210,13 +212,15 @@ router.get('/ingresos', async (req, res) => {
 
     const fechaAct = new Date()
     console.log('fechaAct: ', fechaAct)
-    fechaAct.setTime(fechaAct.getTime() - fechaAct.getTimezoneOffset() * 60 * 1000)
-    console.log('fechaAct: ', fechaAct)
+    fechaAct.setTime(fechaAct.getTime() - fechaAct.getTimezoneOffset() * 60 * 1000)    
+    var tomorrow = new Date();
+    tomorrow.setTime(tomorrow.getTime() - tomorrow.getTimezoneOffset() * 60 * 1000)
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    console.log('fechaAct: ', fechaAct,' tomorrow:',tomorrow)
 
 
     const semAct = getNumberOfWeek(fechaAct) - 1
-
-
     const diaAct = fechaAct.getDay() + 1
     const anioAct = fechaAct.getFullYear()
     const diaHoy = fechaAct.getDate()
@@ -233,8 +237,8 @@ router.get('/ingresos', async (req, res) => {
     }
 
     let queryObj = {}
-    const startOfDay = new Date(fechaAct.setUTCHours(0, 0, 0, 0)).toISOString()
-    const endOfDay = new Date(fechaAct.setUTCHours(23, 59, 59, 999)).toISOString()
+    const startOfDay = new Date(fechaAct.setUTCHours(5, 0, 0, 0)).toISOString()
+    const endOfDay = new Date(tomorrow.setUTCHours(4, 59, 59, 999)).toISOString()
 
     console.log('startOfDay: ', startOfDay, 'endOfDay: ', endOfDay)
 
