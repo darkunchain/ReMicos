@@ -258,10 +258,10 @@ router.get('/ingresos', async (req, res) => {
     const Cli60 = await Registro.find({ 'tiempo': 3600, 'isoDate': obj }).count()
     console.log(Cli60)
 
-    const Cli15p = await Registro.find({ 'tiempo': 901, 'isoDate': obj }).count()
+    const Cli15p = await Registro.find({ 'tiempo': 960, 'isoDate': obj }).count()
     console.log(Cli15p)
 
-    const Cli30p = await Registro.find({ 'tiempo': 1801, 'isoDate': obj }).count()
+    const Cli30p = await Registro.find({ 'tiempo': 1860, 'isoDate': obj }).count()
     console.log(Cli30p)
 
     const ClientesHoy = await Registro.find({ 'isoDate': obj })
