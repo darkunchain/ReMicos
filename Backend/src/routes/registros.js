@@ -413,6 +413,7 @@ router.get('/graf1', async (req, res) => {
 
 
 router.get('/graf2', async (req, res) => {
+    console.log(' req.body:', req.body, ' req.params:', req.params)
 
     const constante = 0
 
