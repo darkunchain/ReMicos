@@ -412,6 +412,14 @@ router.get('/graf1', async (req, res) => {
 })
 
 
+router.post('/graf2', async (req, res) => {
+
+    console.log(' req.body:', req.body, ' req.params:', req.params)
+
+    res.redirect('/')
+
+})
+
 router.get('/graf2', async (req, res) => {
     console.log(' req.body:', req.body, ' req.params:', req.params)
 
