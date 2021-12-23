@@ -40,6 +40,7 @@ app.all('*', function(req, res, next) {
 app.use('/api',require('./routes/asientos'))
 app.use('/api',require('./routes/registros'))
 app.use('/api',require('./routes/users'))
+app.use('/api',require('./routes/estadisticas'))
 
 
 //app.options('*', cors());
