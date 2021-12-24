@@ -138,42 +138,31 @@ router.get('/graf1', async (req, res) => {
 router.post('/graf2', async (req, res) => {
 
     console.log(' req.body:', req.body)
-    const { fecha } = req.body
-    console.log('fecha:', fecha)
-    const mianio = 2025
-    const fechaAct = new Date(mianio,10)
-    const fechaIni = new Date(mianio,0,1)
-    const fechaFin = new Date(mianio,11,31,-5,0,0,0)
-    fechaAct.setTime(fechaAct.getTime() - fechaAct.getTimezoneOffset() * 60 * 1000)
-    console.log('fechaAct: ', fechaAct,'fechaIni:',fechaIni,'fechaFin:',fechaFin)
+    const { anio, mes } = req.body
+    
+    const fechaIni = new Date(anio,+mes-1,1,2,0,0,0)
+    const fechaFin = new Date(anio,mes,1,2,0,0,0)
+    console.log('fechaIni:',fechaIni,'fechaFin:',fechaFin)
 
     const fechaReq = new Date()
 
-    let queryObj = {}
-    const startOfDay = new Date(fechaAct.setUTCHours(0, 0, 0, 0)).toISOString()
-    const endOfDay = new Date(fechaAct.setUTCHours(23, 59, 59, 999)).toISOString()
-
-    console.log('startOfDay: ', startOfDay, 'endOfDay: ', endOfDay)
+    let queryObj = {}    
 
     const obj = queryObj.isoDate = {
-        $gte: startOfDay, // 2019-11-08T00:00:00.000Z
-        $lt: endOfDay // 2019-11-08T23:59:59.999Z
+        $gte: fechaIni.toISOString(), // 2019-11-08T00:00:00.000Z
+        $lt: fechaFin.toISOString() // 2019-11-08T23:59:59.999Z
     }
+    console.log( 'obj:',obj)
 
     const contHoyA = await Registro.aggregate([
         
-        {
+         {
             $group: {
-                 _id: { "$dayOfMonth": "$isoDate"},                 
-                 valor: { $sum: 1 }                 
+                 _id: { "$dayOfMonth": "$isoDate"},
+                 valor: { "$first": "$nombre" }                 
                  }                 
-        },
-        /* {
-            $match: {
-                "anio": mianio
-            }
-        }, */
-        { $sort: {_id: 1} }
+        },        
+        { $sort: {_id: 1} } 
     ])
 
     console.log('contHoyA:',contHoyA)
