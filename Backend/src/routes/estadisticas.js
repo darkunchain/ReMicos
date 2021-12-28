@@ -174,7 +174,8 @@ router.post('/graf2', async (req, res) => {
         {$group: {
             _id : {year : "$year", month : "$month", day : "$day"},
             clientes : { "$sum" : 1},
-            ingresoDia : {"$sum" : "$ingresos"}
+            ingresoDia : {"$sum" : "$ingresos"},
+            dia : {$first : "$day"}
         }},
         {
             "$sort": { "_id.day": 1 }
