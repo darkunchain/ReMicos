@@ -152,17 +152,52 @@ router.post('/graf2', async (req, res) => {
         $gte: fechaIni.toISOString(), // 2019-11-08T00:00:00.000Z
         $lt: fechaFin.toISOString() // 2019-11-08T23:59:59.999Z
     }
-    console.log( 'obj:',obj)
+    console.log( 'obj:',obj, 'queryObj:', queryObj)
+
+    const encontrar = await Registro.find(queryObj).count()
+
+    console.log('encontrar:', encontrar)
 
     const contHoyA = await Registro.aggregate([
-        
-         {
-            $group: {
-                 _id: { "$dayOfMonth": "$isoDate"},
-                 valor: { "$first": "$nombre" }                 
-                 }                 
-        },        
-        { $sort: {_id: 1} } 
+        {
+            $match: {
+                isoDate: {$gte: new Date(fechaIni), $lt: new Date(fechaFin)}
+            }
+        },
+        {$project :{
+            day : {"$dayOfMonth" : "$isoDate"},
+            month : {"$month" : "$isoDate"},
+            year : {"$year" : "$isoDate"},
+            tiempo : { "$sum" : "$tiempo"},
+            "ingresos": {
+            "$switch": {
+                "branches": [
+                  { "case": { "$eq": [ "$tiempo", 900 ] }, "then": 4000 },
+                  { "case": { "$eq": [ "$tiempo", 1800 ] }, "then": 7000 },
+                  { "case": { "$eq": [ "$tiempo", 3600 ] }, "then": 12000 },
+                  { "case": { "$eq": [ "$tiempo", 960 ] }, "then": 3000 },
+                  { "case": { "$eq": [ "$tiempo", 1860 ] }, "then": 5000 }
+                ],
+                default: 0
+            }
+            },
+            total : { "$multiply" : ["$tiempo",100]},
+            
+           
+            
+        }},
+        {$group: {
+            _id : {year : "$year", month : "$month", day : "$day", tiempo: "$tiempo", ingresos : "$ingresos", total : "$total"},           
+            clientes : { "$sum" : 1},
+            
+            
+            
+        }},        
+        {
+            "$sort": { "_id.day": 1 }
+        }
+          
+          
     ])
 
     console.log('contHoyA:',contHoyA)

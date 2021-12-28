@@ -5,6 +5,7 @@ const registroSchema = new Schema({
     nombre: String,
     telefono: Number,
     tiempo: Number,
+    ingresos: Number,
     accion: String,
     blink: Boolean,
     createdAt: Date | String,
