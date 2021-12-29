@@ -140,8 +140,8 @@ router.post('/graf2', async (req, res) => {
     console.log(' req.body:', req.body)
     const { anio, mes } = req.body
     
-    const fechaIni = new Date(anio,+mes-1,1,2,0,0,0)
-    const fechaFin = new Date(anio,mes,1,2,0,0,0)
+    const fechaIni = new Date(anio,+mes-1,1,0,0,0,0)
+    const fechaFin = new Date(anio,mes,1,0,0,0,0)
     console.log('fechaIni:',fechaIni,'fechaFin:',fechaFin)
 
     const fechaReq = new Date()
@@ -165,9 +165,9 @@ router.post('/graf2', async (req, res) => {
             }
         },
         {$project :{
-            day : {"$dayOfMonth" : "$isoDate"},
-            month : {"$month" : "$isoDate"},
-            year : {"$year" : "$isoDate"},
+            day : {"$dayOfMonth" : { date : "$isoDate", timezone: "-0500"}},
+            month : {"$month" : { date : "$isoDate", timezone: "-0500"}},
+            year : {"$year" : { date : "$isoDate", timezone: "-0500"}},
             ingresos : { "$sum" : "$ingresos"}
             
         }},
