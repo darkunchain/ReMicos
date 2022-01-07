@@ -168,14 +168,16 @@ router.post('/graf2', async (req, res) => {
             day : {"$dayOfMonth" : { date : "$isoDate", timezone: "-0500"}},
             month : {"$month" : { date : "$isoDate", timezone: "-0500"}},
             year : {"$year" : { date : "$isoDate", timezone: "-0500"}},
-            ingresos : { "$sum" : "$ingresos"}
+            ingresos : { "$sum" : "$ingresos"},
+            tiempo : { "$sum" : "$tiempo"}
             
         }},
         {$group: {
             _id : {year : "$year", month : "$month", day : "$day"},
             clientes : { "$sum" : 1},
             ingresoDia : {"$sum" : "$ingresos"},
-            dia : {$first : "$day"}
+            dia : {$first : "$day"},
+            itemsSold : { $push:  { tiempo: "$tiempo", ingreso: "$ingresos", nombre: "$nombre" } }
         }},
         {
             "$sort": { "_id.day": 1 }
