@@ -75,6 +75,10 @@ router.get('/graf1', async (req, res) => {
     const lunes30c = await Registro.find({ 'tiempo': 1800, 'isoDate': {$gte: lunesIni, $lt: lunesFin}})
     const lunes60 = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: lunesIni, $lt: lunesFin}}).count()
     const lunes60c = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: lunesIni, $lt: lunesFin}})
+    const lunes15p = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: lunesIni, $lt: lunesFin}}).count()
+    const lunes15pc = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: lunesIni, $lt: lunesFin}})
+    const lunes30p = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: lunesIni, $lt: lunesFin}}).count()
+    const lunes30pc = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: lunesIni, $lt: lunesFin}})
 
     const martes15 = await Registro.find({ 'tiempo': 900, 'isoDate': {$gte: martesIni, $lt: martesFin}}).count()
     const martes15c = await Registro.find({ 'tiempo': 900, 'isoDate': {$gte: martesIni, $lt: martesFin}})
@@ -82,6 +86,10 @@ router.get('/graf1', async (req, res) => {
     const martes30c = await Registro.find({ 'tiempo': 1800, 'isoDate': {$gte: martesIni, $lt: martesFin}})
     const martes60 = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: martesIni, $lt: martesFin}}).count()
     const martes60c = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: martesIni, $lt: martesFin}})
+    const martes15p = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: martesIni, $lt: martesFin}}).count()
+    const martes15pc = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: martesIni, $lt: martesFin}})
+    const martes30p = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: martesIni, $lt: martesFin}}).count()
+    const martes30pc = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: martesIni, $lt: martesFin}})
 
     const miercoles15 = await Registro.find({ 'tiempo': 900, 'isoDate': {$gte: miercolesIni, $lt: miercolesFin}}).count()
     const miercoles15c = await Registro.find({ 'tiempo': 900, 'isoDate': {$gte: miercolesIni, $lt: miercolesFin}})
@@ -89,6 +97,10 @@ router.get('/graf1', async (req, res) => {
     const miercoles30c = await Registro.find({ 'tiempo': 1800, 'isoDate': {$gte: miercolesIni, $lt: miercolesFin}})
     const miercoles60 = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: miercolesIni, $lt: miercolesFin}}).count()
     const miercoles60c = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: miercolesIni, $lt: miercolesFin}})
+    const miercoles15p = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: miercolesIni, $lt: miercolesFin}}).count()
+    const miercoles15pc = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: miercolesIni, $lt: miercolesFin}})
+    const miercoles30p = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: miercolesIni, $lt: miercolesFin}}).count()
+    const miercoles30pc = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: miercolesIni, $lt: miercolesFin}})
 
     const jueves15 = await Registro.find({ 'tiempo': 900, 'isoDate': {$gte: juevesIni, $lt: juevesFin}}).count()
     const jueves15c = await Registro.find({ 'tiempo': 900, 'isoDate': {$gte: juevesIni, $lt: juevesFin}})
@@ -96,6 +108,10 @@ router.get('/graf1', async (req, res) => {
     const jueves30c = await Registro.find({ 'tiempo': 1800, 'isoDate': {$gte: juevesIni, $lt: juevesFin}})
     const jueves60 = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: juevesIni, $lt: juevesFin}}).count()
     const jueves60c = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: juevesIni, $lt: juevesFin}})
+    const jueves15p = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: juevesIni, $lt: juevesFin}}).count()
+    const jueves15pc = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: juevesIni, $lt: juevesFin}})
+    const jueves30p = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: juevesIni, $lt: juevesFin}}).count()
+    const jueves30pc = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: juevesIni, $lt: juevesFin}})
 
     const viernes15 = await Registro.find({ 'tiempo': 900, 'isoDate': {$gte: viernesIni, $lt: viernesFin}}).count()
     const viernes15c = await Registro.find({ 'tiempo': 900, 'isoDate': {$gte: viernesIni, $lt: viernesFin}})
@@ -103,6 +119,10 @@ router.get('/graf1', async (req, res) => {
     const viernes30c = await Registro.find({ 'tiempo': 1800, 'isoDate': {$gte: viernesIni, $lt: viernesFin}})
     const viernes60 = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: viernesIni, $lt: viernesFin}}).count()
     const viernes60c = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: viernesIni, $lt: viernesFin}})
+    const viernes15p = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: viernesIni, $lt: viernesFin}}).count()
+    const viernes15pc = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: viernesIni, $lt: viernesFin}})
+    const viernes30p = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: viernesIni, $lt: viernesFin}}).count()
+    const viernes30pc = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: viernesIni, $lt: viernesFin}})
 
     const sabado15 = await Registro.find({ 'tiempo': 900, 'isoDate': {$gte: sabadoIni, $lt: sabadoFin}}).count()
     const sabado15c = await Registro.find({ 'tiempo': 900, 'isoDate': {$gte: sabadoIni, $lt: sabadoFin}})
@@ -110,6 +130,10 @@ router.get('/graf1', async (req, res) => {
     const sabado30c = await Registro.find({ 'tiempo': 1800, 'isoDate': {$gte: sabadoIni, $lt: sabadoFin}})
     const sabado60 = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: sabadoIni, $lt: sabadoFin}}).count()
     const sabado60c = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: sabadoIni, $lt: sabadoFin}})
+    const sabado15p = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: sabadoIni, $lt: sabadoFin}}).count()
+    const sabado15pc = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: sabadoIni, $lt: sabadoFin}})
+    const sabado30p = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: sabadoIni, $lt: sabadoFin}}).count()
+    const sabado30pc = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: sabadoIni, $lt: sabadoFin}})
 
     const domingo15 = await Registro.find({ 'tiempo': 900, 'isoDate': {$gte: domingoIni, $lt: domingoFin}}).count()
     const domingo15c = await Registro.find({ 'tiempo': 900, 'isoDate': {$gte: domingoIni, $lt: domingoFin}})
@@ -117,17 +141,21 @@ router.get('/graf1', async (req, res) => {
     const domingo30c = await Registro.find({ 'tiempo': 1800, 'isoDate': {$gte: domingoIni, $lt: domingoFin}})
     const domingo60 = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: domingoIni, $lt: domingoFin}}).count()
     const domingo60c = await Registro.find({ 'tiempo': 3600, 'isoDate': {$gte: domingoIni, $lt: domingoFin}})
+    const domingo15p = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: domingoIni, $lt: domingoFin}}).count()
+    const domingo15pc = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: domingoIni, $lt: domingoFin}})
+    const domingo30p = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: domingoIni, $lt: domingoFin}}).count()
+    const domingo30pc = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: domingoIni, $lt: domingoFin}})
     console.log(' lunes15:', lunes15)
 
     res.status(200).send({
         constante,
-        lunes15, lunesIni, lunesFin, lunes15c, lunes30, lunes30c, lunes60,  lunes60c,
-        martes15, martesIni, martesFin, martes15c, martes30, martes30c, martes60,  martes60c,
-        miercoles15, miercolesIni, miercolesFin, miercoles15c, miercoles30, miercoles30c, miercoles60,  miercoles60c,
-        jueves15, juevesIni, juevesFin, jueves15c, jueves30, jueves30c, jueves60,  jueves60c,
-        viernes15, viernesIni, viernesFin, viernes15c, viernes30, viernes30c, viernes60,  viernes60c,
-        sabado15, sabadoIni, sabadoFin, sabado15c, sabado30, sabado30c, sabado60,  sabado60c,
-        domingo15, domingoIni, domingoFin, domingo15c, domingo30, domingo30c, domingo60,  domingo60c,
+        lunes15, lunesIni, lunesFin, lunes15c, lunes30, lunes30c, lunes60,  lunes60c,lunes15p,lunes15pc,lunes30p,lunes30pc,
+        martes15, martesIni, martesFin, martes15c, martes30, martes30c, martes60,  martes60c,martes15p,martes15pc,martes30p,martes30pc,
+        miercoles15, miercolesIni, miercolesFin, miercoles15c, miercoles30, miercoles30c, miercoles60,  miercoles60c,miercoles15p,miercoles15pc,miercoles30p,miercoles30pc,
+        jueves15, juevesIni, juevesFin, jueves15c, jueves30, jueves30c, jueves60,  jueves60c,jueves15p,jueves15pc,jueves30p,jueves30pc,
+        viernes15, viernesIni, viernesFin, viernes15c, viernes30, viernes30c, viernes60,  viernes60c,viernes15p,viernes15pc,viernes30p,viernes30pc,
+        sabado15, sabadoIni, sabadoFin, sabado15c, sabado30, sabado30c, sabado60,  sabado60c,sabado15p,sabado15pc,sabado30p,sabado30pc,
+        domingo15, domingoIni, domingoFin, domingo15c, domingo30, domingo30c, domingo60,  domingo60c,domingo15p,domingo15pc,domingo30p,domingo30pc,
 
 
     })
