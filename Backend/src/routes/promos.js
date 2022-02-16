@@ -9,9 +9,12 @@ router.post('/addPromo', async (req, res) => {
 
     console.log(req.body)
     const newPromo = new promos(req.body);
-    await newPromo.save();
+    const guardado = await newPromo.save();    
+    const token = guardado._id   
 
-    res.redirect('/')
+    res.status(200).send({
+        token
+    })
 
 })
 
