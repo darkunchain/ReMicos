@@ -41,6 +41,7 @@ app.use('/api',require('./routes/asientos'))
 app.use('/api',require('./routes/registros'))
 app.use('/api',require('./routes/users'))
 app.use('/api',require('./routes/estadisticas'))
+app.use('/api',require('./routes/promos'))
 
 
 //app.options('*', cors());
