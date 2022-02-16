@@ -18,6 +18,11 @@ router.post('/addPromo', async (req, res) => {
 
 })
 
+router.get('/promos/:userid', verifyToken, async (req, res) => {
+    const userId = await User.findById(req.params.userid)
+    res.status(200).json(userId)
+})
+
 
 router.get('/promos/data', async (req, res) => {
 
@@ -29,6 +34,8 @@ router.get('/promos/data', async (req, res) => {
         variable
     })
 })
+
+
 
 
 
