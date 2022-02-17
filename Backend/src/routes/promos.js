@@ -45,17 +45,16 @@ router.get('/promos/:userid', async (req, res) => {
     
 })
 
+router.post('/redime', async (req, res) => {
 
-router.get('/promos/data', async (req, res) => {
+    console.log('req.body', req.body)
+    codAprob = req.body.codAprob
 
-    const dataPromos = await promos.find()
-    console.log(Cli30p)
-    var variable = 5
+    res.status(200).send('enviado')
 
-    res.status(200).send({
-        variable
-    })
 })
+
+
 
 
 

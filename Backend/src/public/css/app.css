@@ -1,3 +1,21 @@
 .card .card-content {    
     text-align: center;
 }
+
+.img-caprichos{
+    
+    margin-left: 2rem;
+    align-items: center;
+}
+
+.img-remicos{
+    
+    margin-left: 2rem;
+    align-items: center;
+}
+
+nav {
+    
+    height: 80px!important;
+    line-height: 80px!important;
+}
