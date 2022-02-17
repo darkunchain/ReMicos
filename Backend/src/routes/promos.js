@@ -20,7 +20,7 @@ router.post('/addPromo', async (req, res) => {
 
 router.get('/promos/:userid', async (req, res) => {
     const userId = await promos.findById(req.params.userid)
-    res.status(200).json(userId)
+    res.status(200).send({userId})
 })
 
 
