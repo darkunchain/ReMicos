@@ -37,6 +37,7 @@ app.all('*', function(req, res, next) {
   next();
  });
 
+
 app.use('/api',require('./routes/asientos'))
 app.use('/api',require('./routes/registros'))
 app.use('/api',require('./routes/users'))
@@ -51,6 +52,9 @@ app.use('/api',require('./routes/promos'))
 
 //configuraciones
 app.set('port',process.env.PORT || 3000)
+app.set('views', path.join(__dirname, 'views'));
+app.set('public', path.join(__dirname, 'public'));
+app.set('view engine', 'ejs');
 app.listen(app.get('port'), ()=>{
     console.log('Server on port ',app.get('port'))
 })
@@ -58,6 +62,10 @@ app.listen(app.get('port'), ()=>{
 //Midlewares
 
 app.use(express.urlencoded({extended:false}))
+//app.use(express.static(path.join(__dirname, '/public')));
+//app.use('/public', express.static('public'));
+//app.use(express.static(__dirname + '/public'));
+
 
 
 

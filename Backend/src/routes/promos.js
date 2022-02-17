@@ -1,6 +1,8 @@
 const { Router } = require('express')
 const promos = require('../models/promos')
 const router = Router()
+const http = require('http');
+
 
 const Registro = require('../models/promos')
 
@@ -19,8 +21,28 @@ router.post('/addPromo', async (req, res) => {
 })
 
 router.get('/promos/:userid', async (req, res) => {
-    const userId = await promos.findById(req.params.userid)
-    res.status(200).send({userId})
+    var msg = {}
+    var valid = false
+    const userId = await promos.findById(req.params.userid, function(err, doc){
+        if(err){
+            msg = {errorMsg: "Ha ocurrido un error Inesperado"}
+            rend = 'error'
+        } else {
+            if (!doc) {
+                msg = {errorMsg: "Este bono no existe o ya fue redimido"}
+                rend = 'error'
+            } else {
+                valid = true
+                rend = 'redime'
+            }
+        }
+      })
+      if(valid){
+          msg = {userId}
+      }
+     
+      res.render(rend, msg);
+    
 })
 
 
