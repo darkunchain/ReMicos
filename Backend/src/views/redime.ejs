@@ -73,22 +73,7 @@
         })
     </script>
 
-<script type="text/javascript">
-    $("#contact-form").submit(function(e) {
-        e.preventDefault(); // Prevents the page from refreshing
-        var $this = $(this); // `this` refers to the current form element
-        $.post(
-            $this.attr("action"), // Gets the URL to sent the post to
-            $this.serialize(), // Serializes form data in standard format
-    
-            function(data) {
-            },
-            "json" // The format the response should be in
-        );
-        Materialize.toast("Toasty McToastface!", 1000);
-        $('#contact-form').trigger('reset');
-    });
-    </script>
+
 
 
 

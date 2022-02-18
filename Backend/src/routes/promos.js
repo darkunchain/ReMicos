@@ -51,7 +51,7 @@ router.post('/redime', async (req, res) => {
     console.log('req.body', req.body)
     codAprob = req.body.codAprob
 
-    res.status(200).send('enviado')
+    res.status(200).render('okis')
 
 })
 
