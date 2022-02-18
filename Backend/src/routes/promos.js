@@ -39,6 +39,7 @@ router.get('/promos/:userid', async (req, res) => {
       })
       if(valid){
           msg = {userId}
+          rend = 'redime'
       }
      
       res.render(rend, msg);
