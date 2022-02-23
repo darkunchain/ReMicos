@@ -19,3 +19,7 @@ nav {
     height: 80px!important;
     line-height: 80px!important;
 }
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+    color: #dfcaaf!important;   
+}
