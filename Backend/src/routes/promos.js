@@ -4,7 +4,7 @@ const Aprob = require('../models/aprobadores')
 const router = Router()
 const http = require('http');
 //const swal =require('sweetalert2')
-import swal from 'sweetalert2';
+//import swal from 'sweetalert2';
 
 
 const jwt = require('jsonwebtoken')
@@ -76,7 +76,7 @@ router.post('/redime', async (req, res) => {
         console.log('remicos falso')
         if(!codCaprichosDec) {
             console.log('caprichos falso')
-            swal("Good job!", "You clicked the button!", "success");
+            //swal("Good job!", "You clicked the button!", "success");
 
 
             return res.status(401).send('Este codigo de aprobación no es valido')
