@@ -42,23 +42,23 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">fingerprint</i>
-                            <input type="text" id="autocomplete-input" class="autocomplete" name="codAprob">
+                            <input type="text" id="autocomplete-input" class="autocomplete" name="codAprob" onkeyup="s()">
                             <label for="autocomplete-input">Código de Aprobación</label>
                         </div>
                     </div>
                 </div>
             </div>
             <input type="text" id="autocomplete-input" class="hide autocomplete" value="<%= userId._id %>" name="id">
-               
-            
+
+
 
             <div class="modal-footer">
-                <button class="modal-close waves-effect waves-green btn-flat"
-                    type="Submit"><i class="material-icons left">task_alt</i>Aprobar</button>
+                <button class="modal-close waves-effect waves-green btn-flat" type="Submit" id="aprobe_button" disabled><i
+                        class="material-icons left">task_alt</i>Aprobar</button>
             </div>
         </form>
     </div>
-    
+
 
     <script>
         $(document).ready(function () {
@@ -71,6 +71,18 @@
                 },
             });
         })
+    </script>
+
+
+    <script type="text/javascript">
+        function s() {
+            var i = document.getElementById("autocomplete-input");
+            if (i.value == "") {
+                document.getElementById("aprobe_button").disabled = true;
+            }
+            else
+                document.getElementById("aprobe_button").disabled = false;
+        }
     </script>
 
 
