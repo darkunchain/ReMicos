@@ -77,7 +77,7 @@ router.post('/redime', async (req, res) => {
         console.log('remicos falso')
         if(!codCaprichosDec) {
             console.log('caprichos falso')           
-            msg = "Este codigo de aprobación no es valido"
+            msg = { errorMsg: "Este codigo de aprobación no es valido" }
             rend = "error"
             //return res.status(401).send('Este codigo de aprobación no es valido')
             return res.render(rend, msg);
