@@ -122,7 +122,7 @@ router.post('/redime', async (req, res) => {
                         msg = { errorMsg: "Ha ocurrido un error Inesperado" }
                         rend = 'error'
                     } else {
-                        console.log('redime actualizado:', result)
+                        console.log('redime actualizado:', result, 'redim: ',redim)
                     }
                 })
             }
