@@ -120,7 +120,7 @@ router.post('/redime', async (req, res) => {
             } else {
                 msg = { id }
                 rend = 'redime'
-                console.log('promo.redime:', promo.redRemicos)                
+                console.log('promo.redime:', promo)                
             }
 
 
