@@ -131,7 +131,7 @@ router.post('/redime', async (req, res) => {
 
     }
 
-    console.log(' establecAfuera:', establec, 'promoFinal: ',promo)
+    console.log(' establecAfuera:', establec)
 
 
 
