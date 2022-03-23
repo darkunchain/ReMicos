@@ -107,25 +107,25 @@ router.post('/redime', async (req, res) => {
                 }
             }
         })
-        await promos.findOneAndUpdate({_id:id}, {redRemicos:codRemicosDec,redCaprichos:codCaprichosDec} )
+        await promos.findOneAndModify({_id:id}, {redRemicos:codRemicosDec,redCaprichos:codCaprichosDec} )
 
         if (valid) {
             if(establec = "Remicos" && promo.redRemicos){
                 msg = { errorMsg: "Este bono ya fue redimido en "+ establec }
-                rend = 'error'
+                rend = 'error_msg'
                 console.log('entro al IF: 1')
                 return res.render(rend, { msg, id });
                 
                 
             }else if(establec = "Caprichos" && promo.redCaprichos){
                 msg = { errorMsg: "Este bono ya fue redimido en "+ establec }
-                rend = 'error'
+                rend = 'error_msg'
                 console.log('entro al IF: 2')
                 return res.render(rend, { msg, id });
 
             }else if (promo.redCaprichos && promo.redRemicos) {
                 msg = { errorMsg: "Este bono ya fue redimido en ambos establecimientos" }
-                rend = 'error'
+                rend = 'error_msg'
                 console.log('entro al IF: 3')
                 return res.render(rend, { msg, id });
             } else {
