@@ -117,6 +117,7 @@ router.post('/redime', async (req, res) => {
             } else {
                 msg = { id }
                 rend = 'redime'
+                promo.redime = true
                 const actualiza = await promos.findByIdAndUpdate(id, { redim: true }, function (err, result) {
                     if (err) {
                         msg = { errorMsg: "Ha ocurrido un error Inesperado" }
