@@ -135,7 +135,7 @@ router.post('/redime', async (req, res) => {
 
 })
 
-/* 
+ 
 //%%%%%%%%%%%%%%%%%%%%%% Codigos de aprobacion %%%%%%%%%%%%%%%%%%%%%%%%//
 router.post('/promos/signup', async (req, res) => {    
     const {codigo,establecimiento} = req.body;    
@@ -151,7 +151,7 @@ router.post('/promos/signup', async (req, res) => {
     res.status(201).json({token})
 })
 
- */
+ 
 
 
 
