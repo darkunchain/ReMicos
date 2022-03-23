@@ -111,7 +111,7 @@ router.post('/redime', async (req, res) => {
 
         if (valid) {
             if(establec = "Remicos" && promo.redRemicos){
-                msg = { errorMsg: "Este bono ya fue redimido en "+ establec }
+                msg = { title: "Bono NO valido !!!", errorMsg: "Este bono ya fue redimido en "+ establec }
                 rend = 'error_msg'
                 console.log('entro al IF: 1')
                 return res.render(rend, { msg, id });
