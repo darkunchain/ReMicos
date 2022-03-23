@@ -107,7 +107,7 @@ router.post('/redime', async (req, res) => {
                 }
             }
         })
-        await promos.findOneAndModify({_id:id}, {redRemicos:codRemicosDec,redCaprichos:codCaprichosDec} )
+        await promos.findOneAndUpdate({_id:id}, {redRemicos:codRemicosDec,redCaprichos:codCaprichosDec} )
 
         if (valid) {
             if(establec = "Remicos" && promo.redRemicos){
