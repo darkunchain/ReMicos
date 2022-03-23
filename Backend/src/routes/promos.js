@@ -108,6 +108,9 @@ router.post('/redime', async (req, res) => {
             }
         })
 
+        promo.redRemicos = codRemicosDec
+        promo.redCaprichos = codCaprichosDec
+
 
 
         if (valid) {
