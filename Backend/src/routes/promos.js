@@ -120,15 +120,7 @@ router.post('/redime', async (req, res) => {
             } else {
                 msg = { id }
                 rend = 'redime'
-                console.log('promo.redime:', promo.redRemicos)
-                const actualiza = await promos.findByIdAndUpdate(id, { redim: true }, function (err, result) {
-                    if (err) {
-                        msg = { errorMsg: "Ha ocurrido un error Inesperado" }
-                        rend = 'error'
-                    } else {
-                        console.log('redime actualizado:', result, 'redim: ',redim)
-                    }
-                })
+                console.log('promo.redime:', promo.redRemicos)                
             }
 
 
@@ -139,7 +131,7 @@ router.post('/redime', async (req, res) => {
 
     }
 
-    console.log(' establecAfuera:', establec)
+    console.log(' establecAfuera:', establec, 'promoFinal: ',promo)
 
 
 
