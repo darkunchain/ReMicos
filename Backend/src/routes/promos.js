@@ -108,8 +108,9 @@ router.post('/redime', async (req, res) => {
             }
         })
 
-        promo.redRemicos = codRemicosDec
-        promo.redCaprichos = codCaprichosDec
+        await promos.findOneAndUpdate({_id:id}, {redRemicos:codRemicosDec,redCaprichos:codCaprichosDec} )
+
+        
 
 
 
