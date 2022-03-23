@@ -81,69 +81,68 @@ router.post('/redime', async (req, res) => {
             rend = "error_codigo"
             //return res.status(401).send('Este codigo de aprobación no es valido')
             return res.render(rend, { msg, id });
-        } else {
-            establec = "Caprichos"
-            redim = "redCaprichos"
         }
 
-        console.log(' establec:', establec)
-
-    } else {
+    } else if (codRemicosDec) {
         establec = "Remicos"
         redim = "redRemicos"
+    } else if (codCaprichosDec) {
+        establec = "Caprichos"
+        redim = "redCaprichos"
+    }
 
 
-        const promo = await promos.findById(id, function (err, doc) {
-            if (err) {
-                msg = { errorMsg: "Ha ocurrido un error Inesperado" }
+    const promo = await promos.findById(id, function (err, doc) {
+        if (err) {
+            msg = { errorMsg: "Ha ocurrido un error Inesperado" }
+            rend = 'error'
+        } else {
+            if (!doc) {
+                msg = { errorMsg: "Este bono no existe o ya fue redimido" }
                 rend = 'error'
             } else {
-                if (!doc) {
-                    msg = { errorMsg: "Este bono no existe o ya fue redimido" }
-                    rend = 'error'
-                } else {
-                    valid = true
-                    rend = 'redime'
-                }
-            }
-        })
-        await promos.findOneAndUpdate({_id:id}, {redRemicos:codRemicosDec} )
-        await promos.findOneAndUpdate({_id:id}, {redCaprichos:codCaprichosDec} )
-
-        if (valid) {
-            if(establec = "Remicos" && promo.redRemicos){
-                msg = { title: "Bono NO valido !!!", errorMsg: "Este bono ya fue redimido en Remicos"}
-                rend = 'error_msg'
-                console.log('entro al IF: 1')
-                return res.render(rend, { msg, id });
-                
-                
-            }else if(establec = "Caprichos" && promo.redCaprichos){
-                msg = { title: "Bono NO valido !!!", errorMsg: "Este bono ya fue redimido en Caprichos"}
-                rend = 'error_msg'
-                console.log('entro al IF: 2')
-                return res.render(rend, { msg, id });
-
-            }else if (promo.redCaprichos && promo.redRemicos) {
-                msg = { title: "Bono NO valido !!!", errorMsg: "Este bono ya fue redimido en ambos establecimientos" }
-                rend = 'error_msg'
-                console.log('entro al IF: 3')
-                return res.render(rend, { msg, id });
-            } else {
-                msg = { id }
+                valid = true
                 rend = 'redime'
-                console.log('promo.redime:', promo)
-                console.log('entro al IF: 4')
-                return res.render(rend, { msg, id });
             }
-
-
         }
+    })
+    await promos.findOneAndUpdate({ _id: id }, { redRemicos: codRemicosDec })
+    await promos.findOneAndUpdate({ _id: id }, { redCaprichos: codCaprichosDec })
+
+    if (valid) {
+        if (establec = "Remicos" && promo.redRemicos) {
+            msg = { title: "Bono NO valido !!!", errorMsg: "Este bono ya fue redimido en Remicos" }
+            rend = 'error_msg'
+            console.log('entro al IF: 1')
+            return res.render(rend, { msg, id });
 
 
+        } else if (establec = "Caprichos" && promo.redCaprichos) {
+            msg = { title: "Bono NO valido !!!", errorMsg: "Este bono ya fue redimido en Caprichos" }
+            rend = 'error_msg'
+            console.log('entro al IF: 2')
+            return res.render(rend, { msg, id });
+
+        } else if (promo.redCaprichos && promo.redRemicos) {
+            msg = { title: "Bono NO valido !!!", errorMsg: "Este bono ya fue redimido en ambos establecimientos" }
+            rend = 'error_msg'
+            console.log('entro al IF: 3')
+            return res.render(rend, { msg, id });
+        } else {
+            msg = { id }
+            rend = 'redime'
+            console.log('promo.redime:', promo)
+            console.log('entro al IF: 4')
+            return res.render(rend, { msg, id });
+        }
 
 
     }
+
+
+
+
+
 
     console.log(' establecAfuera:', establec)
 
