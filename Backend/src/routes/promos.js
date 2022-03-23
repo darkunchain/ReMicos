@@ -76,11 +76,11 @@ router.post('/redime', async (req, res) => {
     if(!codRemicosDec) {
         console.log('remicos falso')
         if(!codCaprichosDec) {
-            console.log('caprichos falso')
-            //swal("Good job!", "You clicked the button!", "success");
-
-
-            return res.status(401).send('Este codigo de aprobación no es valido')
+            console.log('caprichos falso')           
+            msg = "Este codigo de aprobación no es valido"
+            rend = "error"
+            //return res.status(401).send('Este codigo de aprobación no es valido')
+            return res.render(rend, msg);
         }else {
             establec = "Caprichos"
             redim = "redCaprichos"
