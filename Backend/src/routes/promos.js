@@ -18,6 +18,7 @@ router.post('/addPromo', async (req, res) => {
 
     console.log(req.body)
     const newPromo = new promos(req.body);
+    console.log('newPromo: ', newPromo)
     const guardado = await newPromo.save();
     const token = guardado._id
 
@@ -80,11 +81,16 @@ router.post('/redime', async (req, res) => {
 
 
             return res.status(401).send('Este codigo de aprobación no es valido')
-        }else establec = "Caprichos"
+        }else {
+            establec = "Caprichos"
+            redim = "redCaprichos"
+        }
+
         console.log(' establec:',establec)
         
     }else {
         establec = "Remicos"
+        redim = "redRemicos"
         
 
         const promo = await promos.findById(id, function (err, doc) {
@@ -101,9 +107,19 @@ router.post('/redime', async (req, res) => {
                 }
             }
         })
+
         if (valid) {
             msg = { id }
             rend = 'redime'
+            const actualiza = await promos.findByIdAndUpdate(id, {redim: true}, function(err, result){
+                if (err) {
+                    msg = { errorMsg: "Ha ocurrido un error Inesperado" }
+                    rend = 'error'
+                } else {
+                    console.log('redime actualizado:', result)
+                }
+            })
+            
         }
     
         
@@ -115,7 +131,7 @@ router.post('/redime', async (req, res) => {
 
     
 
-    res.status(200).render('okis')
+    res.status(200).render('okis',{establec})
 
 })
 
