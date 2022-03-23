@@ -102,7 +102,7 @@ router.post('/redime', async (req, res) => {
                     msg = { errorMsg: "Este bono no existe o ya fue redimido" }
                     rend = 'error'
                 } else {
-                    if(redCaprichos && redRemicos){
+                    if(promo.redCaprichos && promo.redRemicos){
                         msg = { errorMsg: "Este bono ya fue redimido en ambos establecimientos" }
                         rend = 'error'
                     }else{
