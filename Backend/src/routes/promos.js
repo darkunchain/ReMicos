@@ -111,20 +111,20 @@ router.post('/redime', async (req, res) => {
 
         if (valid) {
             if(establec = "Remicos" && promo.redRemicos){
-                msg = { title: "Bono NO valido !!!", errorMsg: "Este bono ya fue redimido en "+ establec }
+                msg = { title: "Bono NO valido !!!", errorMsg: "Este bono ya fue redimido en Remicos"}
                 rend = 'error_msg'
                 console.log('entro al IF: 1')
                 return res.render(rend, { msg, id });
                 
                 
             }else if(establec = "Caprichos" && promo.redCaprichos){
-                msg = { errorMsg: "Este bono ya fue redimido en "+ establec }
+                msg = { title: "Bono NO valido !!!", errorMsg: "Este bono ya fue redimido en Caprichos"}
                 rend = 'error_msg'
                 console.log('entro al IF: 2')
                 return res.render(rend, { msg, id });
 
             }else if (promo.redCaprichos && promo.redRemicos) {
-                msg = { errorMsg: "Este bono ya fue redimido en ambos establecimientos" }
+                msg = { title: "Bono NO valido !!!", errorMsg: "Este bono ya fue redimido en ambos establecimientos" }
                 rend = 'error_msg'
                 console.log('entro al IF: 3')
                 return res.render(rend, { msg, id });
