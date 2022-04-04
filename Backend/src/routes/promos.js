@@ -15,12 +15,40 @@ const Registro = require('../models/promos');
 
 
 router.post('/addPromo', async (req, res) => {
+    var token = "0"
 
     console.log(req.body)
-    const newPromo = new promos(req.body);
-    console.log('newPromo: ', newPromo)
-    const guardado = await newPromo.save();
-    const token = guardado._id
+    console.log('req.body',req.body)
+    const codRemicosAll = await Aprob.findOne({ "establecimiento": "Remicos" })
+    const codCaprichosAll = await Aprob.findOne({ "establecimiento": "Caprichos" })
+    const codRemicosDec = await Aprob.comparePassword(req.body.codigo, codRemicosAll.codigo)
+    const codCaprichosDec = await Aprob.comparePassword(req.body.codigo, codCaprichosAll.codigo)
+
+    console.log(
+    ' codRemicosDec:',codRemicosDec,
+    ' codCaprichosDec:',codCaprichosDec
+    )
+
+    if (!codRemicosDec) {
+        console.log('remicos falso')
+        if (!codCaprichosDec) {
+            console.log('caprichos falso')
+            
+            msg = { errorMsg: "Este codigo de aprobación no es valido",
+                    title: "Codigo Invalido" }
+            rend = "error_msg"
+            id="1234aef1234aef1234aef123"
+            console.log(' rend:',rend,' msg:',msg,' id:',id)
+            //return res.status(401).send('Este codigo de aprobación no es valido')
+            token = "0"            
+        }
+        
+    }else{
+        const newPromo = new promos(req.body);
+        console.log('newPromo: ', newPromo)
+        const guardado = await newPromo.save();
+        token = guardado._id
+    }   
 
     res.status(200).send({
         token
