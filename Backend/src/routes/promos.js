@@ -44,11 +44,13 @@ router.post('/addPromo', async (req, res) => {
         }
         token = "0" 
         
+    }else{
+        const newPromo = new promos(req.body);
+        console.log('newPromo: ', newPromo)
+        const guardado = await newPromo.save();
+        token = guardado._id
     }
-    const newPromo = new promos(req.body);
-    console.log('newPromo: ', newPromo)
-    const guardado = await newPromo.save();
-    token = guardado._id
+    
      
 
     res.status(200).send({
