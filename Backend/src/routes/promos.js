@@ -29,19 +29,12 @@ router.post('/addPromo', async (req, res) => {
     ' codCaprichosDec:',codCaprichosDec
     )
 
-    if (!codRemicosDec) {
-        console.log('remicos falso')
-        if (!codCaprichosDec) {
-            console.log('caprichos falso')
-            
-            msg = { errorMsg: "Este codigo de aprobación no es valido",
-                    title: "Codigo Invalido" }
-            rend = "error_msg"
-            id="1234aef1234aef1234aef123"
-            console.log(' rend:',rend,' msg:',msg,' id:',id)
-            //return res.status(401).send('Este codigo de aprobación no es valido')
-                       
-        }
+    if (!codCaprichosDec && !codRemicosDec) {        
+        msg = { errorMsg: "Este codigo de aprobación no es valido",
+                title: "Codigo Invalido" }
+        rend = "error_msg"
+        id="1234aef1234aef1234aef123"
+        console.log(' rend:',rend,' msg:',msg,' id:',id)
         token = "1234aef1234aef1234aef123" 
         
     }else{
