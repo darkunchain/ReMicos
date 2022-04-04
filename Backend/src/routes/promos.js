@@ -42,7 +42,7 @@ router.post('/addPromo', async (req, res) => {
             //return res.status(401).send('Este codigo de aprobación no es valido')
                        
         }
-        token = "0" 
+        token = "1234aef1234aef1234aef123" 
         
     }else{
         const newPromo = new promos(req.body);
