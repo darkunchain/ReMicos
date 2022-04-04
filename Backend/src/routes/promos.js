@@ -40,15 +40,16 @@ router.post('/addPromo', async (req, res) => {
             id="1234aef1234aef1234aef123"
             console.log(' rend:',rend,' msg:',msg,' id:',id)
             //return res.status(401).send('Este codigo de aprobación no es valido')
-            token = "0"            
+                       
         }
+        token = "0" 
         
-    }else{
-        const newPromo = new promos(req.body);
-        console.log('newPromo: ', newPromo)
-        const guardado = await newPromo.save();
-        token = guardado._id
-    }   
+    }
+    const newPromo = new promos(req.body);
+    console.log('newPromo: ', newPromo)
+    const guardado = await newPromo.save();
+    token = guardado._id
+     
 
     res.status(200).send({
         token
