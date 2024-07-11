@@ -315,41 +315,52 @@ router.post('/grafAnual', async (req, res) => {
     }
     console.log( 'obj:',obj, 'queryObj:', queryObj)
 
-    const encontrar = await Registro.find(queryObj).count()
+    try {
+        const encontrar = await Registro.find(queryObj).count()
+        //const encontrar = await Registro.find({createdAT: {'$gte': '22/11/2021, 5:09:10 p. m.','$lt': '22/12/2021, 5:09:10 p. m.'}}).count()
+        console.log('encontrar:', encontrar)
+    } catch (error) {
+        console.error('Error al buscar registros:', error);
+      }
 
-    console.log('encontrar:', encontrar)
-
-    const ingresosDia = await Registro.aggregate([
+      const ingresosMes = await Registro.aggregate([
         {
-            $match: {
-                isoDate: {$gte: new Date(fechaIni), $lt: new Date(fechaFin)}
-            }
+          $match: {
+            isoDate: { $gte: fechaIni, $lt: fechaFin }
+          }
         },
-        {$project :{
-            day : {"$dayOfMonth" : { date : "$isoDate", timezone: "-0500"}},
-            month : {"$month" : { date : "$isoDate", timezone: "-0500"}},
-            year : {"$year" : { date : "$isoDate", timezone: "-0500"}},
-            ingresos : { "$sum" : "$ingresos"},
-            tiempo : { "$sum" : "$tiempo"}
-            
-        }},
-        {$group: {
-            _id : {year : "$year", month : "$month", day : "$day"},
-            clientes : { "$sum" : 1},
-            ingresoDia : {"$sum" : "$ingresos"},
-            dia : {$first : "$day"},
-            itemsSold : { $push:  { tiempo: "$tiempo", ingreso: "$ingresos", nombre: "$nombre" } }
-        }},
         {
-            "$sort": { "_id.day": 1 }
+          $project: {
+            month: { "$month": { date: "$isoDate", timezone: "-0500" } },
+            year: { "$year": { date: "$isoDate", timezone: "-0500" } },
+            ingresos: { "$sum": "$ingresos" },
+            tiempo: { "$sum": "$tiempo" }
+          }
+        },
+        {
+          $group: {
+            _id: { year: "$year", month: "$month" },
+            clientes: { "$sum": 1 },
+            ingresoMes: { "$sum": "$ingresos" },
+            itemsSold: {
+              $push: {
+                tiempo: "$tiempo",
+                ingreso: "$ingresos",
+                nombre: "$nombre"
+              }
+            }
+          }
+        },
+        {
+          "$sort": { "_id.month": 1 }
         }
-    ])
+      ]);
 
-    console.log('ingresosDia:',ingresosDia)
+      console.log('ingresosMes:', ingresosMes);
 
 
     res.status(200).send({
-        ingresosDia
+        ingresosMes
     })
 
 })
