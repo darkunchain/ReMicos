@@ -273,6 +273,21 @@ router.get('/graf3', async (req, res) => {
 
 
 
+router.get('/grafAnual', async (req, res) => {
+    console.log(' req.body:', req.body, ' req.params:', req.params)
+    const constante = 0
+
+    res.status(200).send({
+        constante,
+
+    })
+
+})
+
+
+
+
+
 
 
 
