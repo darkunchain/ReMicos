@@ -286,6 +286,76 @@ router.get('/grafAnual', async (req, res) => {
 
 
 
+router.post('/grafAnual', async (req, res) => {
+
+    console.log(' req.body:', req.body)
+    const { year } = req.body
+
+    // Verifica que el año sea un número y conviértelo si es necesario
+    const anio = parseInt(year, 10);
+    if (isNaN(anio)) {
+    console.error('El año proporcionado no es un número válido:', year);
+    return;
+    }
+    
+    const fechaIni = new Date(anio, 0, 1, 0, 0, 0, 0); // Inicio del año
+    const fechaFin = new Date(anio + 1, 0, 1, 0, 0, 0, 0); // Inicio del siguiente año
+    console.log('fechaIni:',fechaIni,'fechaFin:',fechaFin)
+
+    if (isNaN(fechaIni.getTime()) || isNaN(fechaFin.getTime())) {
+        console.error('Fecha de inicio o fin inválida.');
+        return;
+      }
+
+    let queryObj = {}    
+
+    const obj = queryObj.isoDate = {
+        $gte: fechaIni.toISOString(), // 2019-11-08T00:00:00.000Z
+        $lt: fechaFin.toISOString() // 2019-11-08T23:59:59.999Z
+    }
+    console.log( 'obj:',obj, 'queryObj:', queryObj)
+
+    const encontrar = await Registro.find(queryObj).count()
+
+    console.log('encontrar:', encontrar)
+
+    const ingresosDia = await Registro.aggregate([
+        {
+            $match: {
+                isoDate: {$gte: new Date(fechaIni), $lt: new Date(fechaFin)}
+            }
+        },
+        {$project :{
+            day : {"$dayOfMonth" : { date : "$isoDate", timezone: "-0500"}},
+            month : {"$month" : { date : "$isoDate", timezone: "-0500"}},
+            year : {"$year" : { date : "$isoDate", timezone: "-0500"}},
+            ingresos : { "$sum" : "$ingresos"},
+            tiempo : { "$sum" : "$tiempo"}
+            
+        }},
+        {$group: {
+            _id : {year : "$year", month : "$month", day : "$day"},
+            clientes : { "$sum" : 1},
+            ingresoDia : {"$sum" : "$ingresos"},
+            dia : {$first : "$day"},
+            itemsSold : { $push:  { tiempo: "$tiempo", ingreso: "$ingresos", nombre: "$nombre" } }
+        }},
+        {
+            "$sort": { "_id.day": 1 }
+        }
+    ])
+
+    console.log('ingresosDia:',ingresosDia)
+
+
+    res.status(200).send({
+        ingresosDia
+    })
+
+})
+
+
+
 
 
 
