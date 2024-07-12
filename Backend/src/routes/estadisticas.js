@@ -364,7 +364,79 @@ router.post('/grafAnual', async (req, res) => {
 
 })
 
-
+router.post('/grafMes', async (req, res) => {
+    console.log('req.body:', req.body);
+    const { month } = req.body;
+  
+    // Verifica que el mes sea un número y conviértelo si es necesario
+    const mes = parseInt(month, 10);
+    if (isNaN(mes) || mes < 1 || mes > 12) {
+      console.error('El mes proporcionado no es un número válido:', month);
+      return res.status(400).send({ error: 'El mes proporcionado no es un número válido.' });
+    }
+  
+    const fechaInicio = new Date(2021, mes - 1, 1, 0, 0, 0, 0); // Inicio de enero de 2021
+    const fechaFin = new Date(); // Fecha actual
+    console.log('fechaInicio:', fechaInicio, 'fechaFin:', fechaFin);
+  
+    if (isNaN(fechaInicio.getTime()) || isNaN(fechaFin.getTime())) {
+      console.error('Fecha de inicio o fin inválida.');
+      return res.status(400).send({ error: 'Fecha de inicio o fin inválida.' });
+    }
+  
+    const queryObj = {
+      isoDate: {
+        $gte: fechaInicio.toISOString(),
+        $lt: fechaFin.toISOString()
+      }
+    };
+  
+    console.log('queryObj:', queryObj);
+  
+    try {
+      const ingresosMes = await Registro.aggregate([
+        {
+          $match: {
+            isoDate: { $gte: fechaInicio, $lt: fechaFin },
+            $expr: { $eq: [{ $month: "$isoDate" }, mes] }
+          }
+        },
+        {
+          $project: {
+            year: { $year: { date: "$isoDate", timezone: "-0500" } },
+            ingresos: "$ingresos",
+            tiempo: "$tiempo"
+          }
+        },
+        {
+          $group: {
+            _id: { year: "$year" },
+            clientes: { $sum: 1 },
+            ingresoMes: { $sum: "$ingresos" },
+            itemsSold: {
+              $push: {
+                tiempo: "$tiempo",
+                ingreso: "$ingresos",
+                nombre: "$nombre"
+              }
+            }
+          }
+        },
+        {
+          $sort: { "_id.year": 1 }
+        }
+      ]);
+  
+      console.log('ingresosMes:', ingresosMes);
+  
+      res.status(200).send({
+        ingresosMes
+      });
+    } catch (error) {
+      console.error('Error al agrupar registros:', error);
+      res.status(500).send({ error: 'Error al agrupar registros.' });
+    }
+  });
 
 
 
