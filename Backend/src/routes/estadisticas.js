@@ -316,8 +316,7 @@ router.post('/grafAnual', async (req, res) => {
     console.log( 'obj:',obj, 'queryObj:', queryObj)
 
     try {
-        const encontrar = await Registro.find(queryObj).count()
-        //const encontrar = await Registro.find({createdAT: {'$gte': '22/11/2021, 5:09:10 p. m.','$lt': '22/12/2021, 5:09:10 p. m.'}}).count()
+        const encontrar = await Registro.find(queryObj).count()        
         console.log('encontrar:', encontrar)
     } catch (error) {
         console.error('Error al buscar registros:', error);
