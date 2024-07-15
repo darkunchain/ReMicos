@@ -369,7 +369,7 @@ router.post('/grafMes', async (req, res) => {
     const { month } = req.body;
   
     // Verifica que el mes sea un número y conviértelo si es necesario
-    const mes = parseInt(month, 10);
+    const mes = parseInt(month+1, 10);
     if (isNaN(mes) || mes < 1 || mes > 12) {
       console.error('El mes proporcionado no es un número válido:', month);
       return res.status(400).send({ error: 'El mes proporcionado no es un número válido.' });
