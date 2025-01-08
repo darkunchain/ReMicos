@@ -210,13 +210,13 @@ router.get('/ingresos', async (req, res) => {
 
 
     const fechaAct = new Date()
-    console.log('fechaAct: ', fechaAct)
+    //console.log('fechaAct: ', fechaAct)
     fechaAct.setTime(fechaAct.getTime() - fechaAct.getTimezoneOffset() * 60 * 1000)    
     var tomorrow = new Date();
     tomorrow.setTime(tomorrow.getTime() - tomorrow.getTimezoneOffset() * 60 * 1000)
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    console.log('fechaAct: ', fechaAct,' tomorrow:',tomorrow)
+    //console.log('fechaAct: ', fechaAct,' tomorrow:',tomorrow)
 
 
     const semAct = getNumberOfWeek(fechaAct) - 1
@@ -224,7 +224,7 @@ router.get('/ingresos', async (req, res) => {
     const anioAct = fechaAct.getFullYear()
     const diaHoy = fechaAct.getDate()
 
-    console.log('diaHoy:', diaHoy, ' anioAct:', anioAct, ' diaAct:', diaAct, ' semAct:', semAct)
+    //console.log('diaHoy:', diaHoy, ' anioAct:', anioAct, ' diaAct:', diaAct, ' semAct:', semAct)
 
 
     function getNumberOfWeek(date) {
@@ -239,32 +239,32 @@ router.get('/ingresos', async (req, res) => {
     const startOfDay = new Date(fechaAct.setUTCHours(5, 0, 0, 0)).toISOString()
     const endOfDay = new Date(tomorrow.setUTCHours(4, 59, 59, 999)).toISOString()
 
-    console.log('startOfDay: ', startOfDay, 'endOfDay: ', endOfDay)
+    //console.log('startOfDay: ', startOfDay, 'endOfDay: ', endOfDay)
 
     const obj = queryObj.isoDate = {
         $gte: startOfDay, // 2019-11-08T00:00:00.000Z
         $lt: endOfDay // 2019-11-08T23:59:59.999Z
     }
 
-    console.log(' obj:', obj)
+    //console.log(' obj:', obj)
 
     const Cli15 = await Registro.find({ 'tiempo': 900, 'isoDate': obj }).count()
-    console.log(Cli15)
+    //console.log(Cli15)
 
     const Cli30 = await Registro.find({ 'tiempo': 1800, 'isoDate': obj }).count()
-    console.log(Cli30)
+    //console.log(Cli30)
 
     const Cli60 = await Registro.find({ 'tiempo': 3600, 'isoDate': obj }).count()
-    console.log(Cli60)
+    //console.log(Cli60)
 
     const Cli15p = await Registro.find({ 'tiempo': 960, 'isoDate': obj }).count()
-    console.log(Cli15p)
+    //console.log(Cli15p)
 
     const Cli30p = await Registro.find({ 'tiempo': 1860, 'isoDate': obj }).count()
-    console.log(Cli30p)
+    //console.log(Cli30p)
 
     const ClientesHoy = await Registro.find({ 'isoDate': obj })
-    console.log(ClientesHoy)
+    //console.log(ClientesHoy)
 
     res.status(200).send({
         Cli15,

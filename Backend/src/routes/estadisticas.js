@@ -9,7 +9,7 @@ router.get('/graf1', async (req, res) => {
 
     const fechaAct = new Date()
     fechaAct.setTime(fechaAct.getTime() - fechaAct.getTimezoneOffset() * 60 * 1000)
-    console.log('fechaAct: ', fechaAct)   
+    //console.log('fechaAct: ', fechaAct)   
 
 
     var currentDate = new Date();
@@ -27,9 +27,9 @@ router.get('/graf1', async (req, res) => {
     nextweek.setTime(nextweek.getTime() - nextweek.getTimezoneOffset() * 60 * 1000)    
     var lunessig = new Date(nextweek.setDate(nextweek.getDate() - nextweek.getDay()));
 
-    console.log(' lunes:', lunes, ' martes:',martes, 
+    /* console.log(' lunes:', lunes, ' martes:',martes, 
     ' miercoles:', miercoles, ' jueves:',jueves,
-    ' viernes:', viernes, ' sabado:',sabado,' domingo:', domingo,' nextweek:',nextweek,' lunessig:',lunessig)
+    ' viernes:', viernes, ' sabado:',sabado,' domingo:', domingo,' nextweek:',nextweek,' lunessig:',lunessig) */
 
     const lunesIni = new Date(lunes.setUTCHours(5, 0, 0, 0)).toISOString()
     const lunesFin = new Date(martes.setUTCHours(4, 59, 59, 999)).toISOString()
@@ -52,17 +52,17 @@ router.get('/graf1', async (req, res) => {
     const domingoIni = new Date(domingo.setUTCHours(5, 0, 0, 0)).toISOString()
     const domingoFin = new Date(lunessig.setUTCHours(4, 59, 59, 999)).toISOString()
 
-    console.log(' lunesIni:', lunesIni, ' lunesFin:', lunesFin,' martesIni:', martesIni, ' martesFin:', martesFin,
+    /*console.log(' lunesIni:', lunesIni, ' lunesFin:', lunesFin,' martesIni:', martesIni, ' martesFin:', martesFin,
     ' miercolesIni:', miercolesIni, ' miercolesFin:', miercolesFin,' juevesIni:', juevesIni, ' juevesFin:', juevesFin,
     ' viernesIni:', viernesIni, ' viernesFin:', viernesFin,' sabadoIni:', sabadoIni, ' sabadoFin:', sabadoFin,
-    ' domingoIni:', domingoIni, ' domingoFin:', domingoFin)
+    ' domingoIni:', domingoIni, ' domingoFin:', domingoFin)*/
     
  
     let queryObj = {}
     const startOfDay = new Date(fechaAct.setUTCHours(0, 0, 0, 0)).toISOString()
     const endOfDay = new Date(fechaAct.setUTCHours(23, 59, 59, 999)).toISOString()
 
-    console.log('startOfDay: ', startOfDay, 'endOfDay: ', endOfDay)
+    //console.log('startOfDay: ', startOfDay, 'endOfDay: ', endOfDay)
 
     const obj = queryObj.isoDate = {
         $gte: startOfDay, // 2019-11-08T00:00:00.000Z
@@ -145,7 +145,7 @@ router.get('/graf1', async (req, res) => {
     const domingo15pc = await Registro.find({ 'tiempo': 960, 'isoDate': {$gte: domingoIni, $lt: domingoFin}})
     const domingo30p = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: domingoIni, $lt: domingoFin}}).count()
     const domingo30pc = await Registro.find({ 'tiempo': 1860, 'isoDate': {$gte: domingoIni, $lt: domingoFin}})
-    console.log(' lunes15:', lunes15)
+    //console.log(' lunes15:', lunes15)
 
     res.status(200).send({
         constante,
@@ -165,12 +165,12 @@ router.get('/graf1', async (req, res) => {
 
 router.post('/graf2', async (req, res) => {
 
-    console.log(' req.body:', req.body)
+    //console.log(' req.body:', req.body)
     const { anio, mes } = req.body
     
     const fechaIni = new Date(anio,+mes-1,1,0,0,0,0)
     const fechaFin = new Date(anio,mes,1,0,0,0,0)
-    console.log('fechaIni:',fechaIni,'fechaFin:',fechaFin)
+    //console.log('fechaIni:',fechaIni,'fechaFin:',fechaFin)
 
     const fechaReq = new Date()
 
@@ -180,11 +180,11 @@ router.post('/graf2', async (req, res) => {
         $gte: fechaIni.toISOString(), // 2019-11-08T00:00:00.000Z
         $lt: fechaFin.toISOString() // 2019-11-08T23:59:59.999Z
     }
-    console.log( 'obj:',obj, 'queryObj:', queryObj)
+    //console.log( 'obj:',obj, 'queryObj:', queryObj)
 
     const encontrar = await Registro.find(queryObj).count()
 
-    console.log('encontrar:', encontrar)
+    //console.log('encontrar:', encontrar)
 
     const ingresosDia = await Registro.aggregate([
         {
@@ -212,7 +212,7 @@ router.post('/graf2', async (req, res) => {
         }
     ])
 
-    console.log('ingresosDia:',ingresosDia)
+    //console.log('ingresosDia:',ingresosDia)
 
 
     res.status(200).send({
@@ -224,7 +224,7 @@ router.post('/graf2', async (req, res) => {
 
 
 router.get('/graf2', async (req, res) => {
-    console.log(' req.body:', req.body, ' req.params:', req.params)
+    //console.log(' req.body:', req.body, ' req.params:', req.params)
     const constante = 0
 
     res.status(200).send({
@@ -238,12 +238,12 @@ router.get('/graf2', async (req, res) => {
 
 router.post('/graf3', async (req, res) => {
 
-    console.log(' req.body:', req.body)
+    //console.log(' req.body:', req.body)
     const { anio, mes } = req.body
 
     const fechaAct = new Date()
     fechaAct.setTime(fechaAct.getTime() - fechaAct.getTimezoneOffset() * 60 * 1000)
-    console.log('fechaAct: ', fechaAct)
+    //console.log('fechaAct: ', fechaAct)
 
     const fechaReq = new Date()
 
@@ -253,7 +253,7 @@ router.post('/graf3', async (req, res) => {
         { $group: { _id: { "$month": "$isoDate"}, click: { $sum: 1 } } }
     ])
 
-    console.log('contHoyA:',contHoyA)
+    //console.log('contHoyA:',contHoyA)
 
 
     res.redirect('/')
@@ -261,7 +261,7 @@ router.post('/graf3', async (req, res) => {
 })
 
 router.get('/graf3', async (req, res) => {
-    console.log(' req.body:', req.body, ' req.params:', req.params)
+    //console.log(' req.body:', req.body, ' req.params:', req.params)
     const constante = 0
 
     res.status(200).send({
@@ -274,7 +274,7 @@ router.get('/graf3', async (req, res) => {
 
 
 router.get('/grafAnual', async (req, res) => {
-    console.log(' req.body:', req.body, ' req.params:', req.params)
+    //console.log(' req.body:', req.body, ' req.params:', req.params)
     const constante = 0
 
     res.status(200).send({
@@ -288,7 +288,7 @@ router.get('/grafAnual', async (req, res) => {
 
 router.post('/grafAnual', async (req, res) => {
 
-    console.log(' req.body:', req.body)
+    //console.log(' req.body:', req.body)
     const { year } = req.body
 
     // Verifica que el año sea un número y conviértelo si es necesario
@@ -300,7 +300,7 @@ router.post('/grafAnual', async (req, res) => {
     
     const fechaIni = new Date(anio, 0, 1, 0, 0, 0, 0); // Inicio del año
     const fechaFin = new Date(anio + 1, 0, 1, 0, 0, 0, 0); // Inicio del siguiente año
-    console.log('fechaIni:',fechaIni,'fechaFin:',fechaFin)
+    //console.log('fechaIni:',fechaIni,'fechaFin:',fechaFin)
 
     if (isNaN(fechaIni.getTime()) || isNaN(fechaFin.getTime())) {
         console.error('Fecha de inicio o fin inválida.');
@@ -313,11 +313,11 @@ router.post('/grafAnual', async (req, res) => {
         $gte: fechaIni.toISOString(), // 2019-11-08T00:00:00.000Z
         $lt: fechaFin.toISOString() // 2019-11-08T23:59:59.999Z
     }
-    console.log( 'obj:',obj, 'queryObj:', queryObj)
+    //console.log( 'obj:',obj, 'queryObj:', queryObj)
 
     try {
         const encontrar = await Registro.find(queryObj).count()        
-        console.log('encontrar:', encontrar)
+        //console.log('encontrar:', encontrar)
     } catch (error) {
         console.error('Error al buscar registros:', error);
       }
@@ -355,7 +355,7 @@ router.post('/grafAnual', async (req, res) => {
         }
       ]);
 
-      console.log('ingresosMes:', ingresosMes);
+      //console.log('ingresosMes:', ingresosMes);
 
 
     res.status(200).send({
@@ -365,7 +365,7 @@ router.post('/grafAnual', async (req, res) => {
 })
 
 router.post('/grafMes', async (req, res) => {
-    console.log('req.body:', req.body);
+    //console.log('req.body:', req.body);
     const { month } = req.body;
   
     // Verifica que el mes sea un número y conviértelo si es necesario
@@ -377,7 +377,7 @@ router.post('/grafMes', async (req, res) => {
   
     const fechaInicio = new Date(2021, mes - 1, 1, 0, 0, 0, 0); // Inicio de enero de 2021
     const fechaFin = new Date(); // Fecha actual
-    console.log('fechaInicio:', fechaInicio, 'fechaFin:', fechaFin);
+    console.log('fechaInicio_1:', fechaInicio, 'fechaFin_1:', fechaFin);
   
     if (isNaN(fechaInicio.getTime()) || isNaN(fechaFin.getTime())) {
       console.error('Fecha de inicio o fin inválida.');
@@ -391,7 +391,7 @@ router.post('/grafMes', async (req, res) => {
       }
     };
   
-    console.log('queryObj:', queryObj);
+    //console.log('queryObj:', queryObj);
   
     try {
       const ingresosMes = await Registro.aggregate([
@@ -439,7 +439,221 @@ router.post('/grafMes', async (req, res) => {
   });
 
 
+//%%%%%%%%%%%%%%%%%%%%% Grafica de los dias del mes segmentada por tiempos de ingresos %%%%%%%%%%%%%%%%%%%%%%%//
 
+
+  router.post('/grafseg', async (req, res) => {
+    //console.log('req.body:', req.body);
+    const { anio, mes } = req.body;
+
+    const fechaIni = new Date(anio, +mes - 1, 1, 0, 0, 0, 0);
+    const fechaFin = new Date(anio, mes, 1, 0, 0, 0, 0);
+    //console.log('fechaIni:', fechaIni, 'fechaFin:', fechaFin);
+
+    const ingresosDia = await Registro.aggregate([
+        {
+            $match: {
+                isoDate: { $gte: new Date(fechaIni), $lt: new Date(fechaFin) }
+            }
+        },
+        {
+            $project: {
+                day: { $dayOfMonth: { date: "$isoDate", timezone: "-0500" } },
+                month: { $month: { date: "$isoDate", timezone: "-0500" } },
+                year: { $year: { date: "$isoDate", timezone: "-0500" } },
+                tiempo: "$tiempo",
+            }
+        },
+        {
+            $group: {
+                _id: { year: "$year", month: "$month", day: "$day" },
+                tiempo15: {
+                    $sum: {
+                        $cond: [{ $eq: ["$tiempo", 900] }, 1, 0]
+                    }
+                },
+                tiempo30: {
+                    $sum: {
+                        $cond: [{ $eq: ["$tiempo", 1800] }, 1, 0]
+                    }
+                },
+                tiempo60: {
+                    $sum: {
+                        $cond: [{ $eq: ["$tiempo", 3600] }, 1, 0]
+                    }
+                },
+                tiempo15p: {
+                    $sum: {
+                        $cond: [{ $eq: ["$tiempo", 960] }, 1, 0]
+                    }
+                },
+                tiempo30p: {
+                    $sum: {
+                        $cond: [{ $eq: ["$tiempo", 1860] }, 1, 0]
+                    }
+                },
+                dia: { $first: "$day" }
+            }
+        },
+        {
+            $sort: { "_id.day": 1 }
+        }
+    ]);
+
+    //console.log('ingresosDia:', ingresosDia);
+
+    res.status(200).send({
+        ingresosDia
+    });
+});
+
+
+//%%%%%%%%%%%%%%%%%%%%% Grafica de los meses del año segmentada por tiempos de ingresos %%%%%%%%%%%%%%%%%%%%%%%//
+
+
+router.post('/grafSegAnual', async (req, res) => {
+  //console.log(' req.body:', req.body);
+  const { year } = req.body;
+
+  // Verifica que el año sea un número y conviértelo si es necesario
+  const anio = parseInt(year, 10);
+  if (isNaN(anio)) {
+      console.error('El año proporcionado no es un número válido:', year);
+      return;
+  }
+  
+  const fechaIni = new Date(anio, 0, 1, 0, 0, 0, 0); // Inicio del año
+  const fechaFin = new Date(anio + 1, 0, 1, 0, 0, 0, 0); // Inicio del siguiente año
+  //console.log('fechaIni:', fechaIni, 'fechaFin:', fechaFin);
+
+  if (isNaN(fechaIni.getTime()) || isNaN(fechaFin.getTime())) {
+      console.error('Fecha de inicio o fin inválida.');
+      return;
+  }
+
+  let queryObj = {};    
+
+  const obj = queryObj.isoDate = {
+      $gte: fechaIni.toISOString(), // 2019-11-08T00:00:00.000Z
+      $lt: fechaFin.toISOString() // 2019-11-08T23:59:59.999Z
+  };
+  //console.log('obj:', obj, 'queryObj:', queryObj);
+
+  try {
+      const encontrar = await Registro.find(queryObj).count();        
+      //console.log('encontrar:', encontrar);
+  } catch (error) {
+      console.error('Error al buscar registros:', error);
+  }
+
+  const ingresosMes = await Registro.aggregate([
+      {
+          $match: {
+              isoDate: { $gte: fechaIni, $lt: fechaFin }
+          }
+      },
+      {
+          $project: {
+              month: { "$month": { date: "$isoDate", timezone: "-0500" } },
+              year: { "$year": { date: "$isoDate", timezone: "-0500" } },
+              //ingresos: "$ingresos",
+              tiempo: "$tiempo"
+          }
+      },
+      {
+          $group: {
+              _id: { year: "$year", month: "$month" },
+              //ingresos: { "$sum": "$ingresos" },
+              tiempo15: { "$sum": { "$cond": [{ "$eq": ["$tiempo", 900] }, 1, 0] } },
+              tiempo30: { "$sum": { "$cond": [{ "$eq": ["$tiempo", 1800] }, 1, 0] } },
+              tiempo60: { "$sum": { "$cond": [{ "$eq": ["$tiempo", 3600] }, 1, 0] } },
+              tiempo15p: { "$sum": { "$cond": [{ "$eq": ["$tiempo", 960] }, 1, 0] } },
+              tiempo30p: { "$sum": { "$cond": [{ "$eq": ["$tiempo", 1860] }, 1, 0] } }
+          }
+      },
+      {
+          "$sort": { "_id.month": 1 }
+      }
+  ]);
+
+  //console.log('ingresosMes:', ingresosMes);
+
+  res.status(200).send({
+      ingresosMes
+  });
+});
+
+
+
+//%%%%%%%%%%%%%%%%%%%%% Grafica de los meses de cada año segmentada por tiempos de ingresos %%%%%%%%%%%%%%%%%%%%%%%//
+
+
+router.post('/grafSegMes', async (req, res) => {
+  console.log('req.body:', req.body);
+  const { month } = req.body;
+
+  // Verifica que el mes sea un número y conviértelo si es necesario
+  const mes = parseInt(month + 1, 10);
+  if (isNaN(mes) || mes < 1 || mes > 12) {
+      console.error('El mes proporcionado no es un número válido:', month);
+      return res.status(400).send({ error: 'El mes proporcionado no es un número válido.' });
+  }
+
+  const fechaInicio = new Date(2021, mes - 1, 1, 0, 0, 0, 0); // Inicio del mes
+  const fechaFin = new Date(); // Fecha actual
+  console.log('fechaInicio_2:', fechaInicio, 'fechaFin_2:', fechaFin);
+
+  if (isNaN(fechaInicio.getTime()) || isNaN(fechaFin.getTime())) {
+      console.error('Fecha de inicio o fin inválida.');
+      return res.status(400).send({ error: 'Fecha de inicio o fin inválida.' });
+  }
+
+  const queryObj = {
+      isoDate: {
+          $gte: fechaInicio,
+          $lt: fechaFin,
+      },
+  };
+
+  //console.log('queryObj:', queryObj);
+
+  try {
+      const ingresosMes = await Registro.aggregate([
+          {
+              $match: queryObj,
+          },
+          {
+              $project: {
+                  year: { $year: { date: "$isoDate", timezone: "-0500" } },
+                  tiempo: "$tiempo"                  
+              },
+          },
+          {
+              $group: {
+                  _id: { year: "$year" },
+                  //totalIngresos: { $sum: "$ingresos" },
+                  tiempo15: { "$sum": { "$cond": [{ "$eq": ["$tiempo", 900] }, 1, 0] } },
+                  tiempo30: { "$sum": { "$cond": [{ "$eq": ["$tiempo", 1800] }, 1, 0] } },
+                  tiempo60: { "$sum": { "$cond": [{ "$eq": ["$tiempo", 3600] }, 1, 0] } },
+                  tiempo15p: { "$sum": { "$cond": [{ "$eq": ["$tiempo", 960] }, 1, 0] } },
+                  tiempo30p: { "$sum": { "$cond": [{ "$eq": ["$tiempo", 1860] }, 1, 0] } }
+              },
+          },
+          {
+              $sort: { "_id.year": 1 },
+          },
+      ]);
+
+      console.log('ingresosMesSegmentado:', ingresosMes);
+
+      res.status(200).send({
+          ingresosMes,
+      });
+  } catch (error) {
+      console.error('Error al agrupar registros:',error.message, error.stack);
+      res.status(500).send({ error: 'Error al agrupar registros.',details: error.message });
+  }
+});
 
 
 
