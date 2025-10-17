@@ -14,197 +14,115 @@ router.post('/add', async (req, res) => {
 
 })
 
-router.get('/registros', async (req, res) => {
-    //const Clientes = await Registro.findById(req.params.userid)
+router.get(['/registros', '/registros/ultimos/:days'], async (req, res, next) => {
+  try {
+    // ------- parámetros -------
+    const rawDays = req.query.days ?? req.params.days ?? 7;
+    let days = parseInt(String(rawDays), 10);
+    if (Number.isNaN(days) || days < 1) days = 7;
+    days = Math.min(days, 31); // cota de seguridad
 
-    const Clientes = await Registro.find()
-    const ClientesCount = await Registro.find().count()
-    const fechaAct = new Date();
-    fechaAct.setTime(fechaAct.getTime() - fechaAct.getTimezoneOffset() * 60 * 1000)
-    console.log('fechaAct_regitros:', fechaAct)
-    const diaAct = fechaAct.getDay() + 1
-    const semAct = getNumberOfWeek() - 1
-    const mesAct = fechaAct.getMonth() + 1
-    const anioAct = fechaAct.getFullYear()
-    var contMesAct = {}
-    var contSemAct = {}
-    var contHoy = {}
-    var mesArray = []
+    const now  = new Date();
+    const from = new Date(now.getTime() - days * 86400_000);
 
+    // límites de hoy, semana actual (ISO) y mes actual
+    const startOfDay   = new Date(now); startOfDay.setHours(0,0,0,0);
+    const startOfWeek  = new Date(startOfDay);
+    const day = (startOfWeek.getDay() + 6) % 7; // 0=lunes
+    startOfWeek.setDate(startOfWeek.getDate() - day);
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
-    function getNumberOfWeek() {
-        const today = new Date();
-        const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-        const pastDaysOfYear = ((today - firstDayOfYear) / 86400000);
-        return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay()) / 7);
-    }
+    const startOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
+    // ------- una sola agregación con $facet -------
+    const [result] = await Registro.aggregate([
+      {
+        $facet: {
+          // documentos del rango (últimos N días)
+          Clientes: [
+            { $match: { isoDate: { $gte: from, $lte: now } } },
+            { $sort:  { isoDate: -1 } },
+            { $project: { __v: 0 } } // quita lo que no necesites
+          ],
 
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica cilindro  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+          // contadores rápidos por rangos (sin $group, solo $count)
+          contHoyA: [
+            { $match: { isoDate: { $gte: startOfDay,   $lt: now } } },
+            { $count: 'c' }
+          ],
+          contSemA: [
+            { $match: { isoDate: { $gte: startOfWeek,  $lt: now } } },
+            { $count: 'c' }
+          ],
+          contMesA: [
+            { $match: { isoDate: { $gte: startOfMonth, $lt: now } } },
+            { $count: 'c' }
+          ],
 
-    const contHoyA = await Registro.aggregate([
-        {
-            "$project": {
-                "dateDay": { "$dayOfWeek": "$isoDate" },
-                "dateWeek": { "$week": "$isoDate" },
-                "dateYear": { "$year": "$isoDate" },
-            }
-        },
-        {
-            "$group": {
-                "_id": "$_id",
-                "diaReg": { $first: "$dateDay" },
-                "semana": { $first: "$dateWeek" },
-                "anio": { $first: "$dateYear" },
-            }
-        },
-        { "$match": { "diaReg": diaAct, "semana": semAct, "anio": anioAct } },
-        { $count: "conteo" }
-    ])
+          // total en el rango (últimos N días)
+          ClientesCountA: [
+            { $match: { isoDate: { $gte: from, $lte: now } } },
+            { $count: 'total' }
+          ],
 
-    const contSemA = await Registro.aggregate([
-        {
-            "$project": {
-                "dateWeek": { "$week": "$isoDate" },
-                "dateYear": { "$year": "$isoDate" },
-            }
-        },
-        {
-            "$group": {
-                "_id": "$_id",
-                "semana": { $first: "$dateWeek" },
-                "anio": { $first: "$dateYear" },
-            }
-        },
-        { "$match": { "semana": semAct, "anio": anioAct } },
-        { $count: "conteo" }
-    ])
+          // por día del mes (solo mes actual)
+          perDiasA: [
+            { $match: { isoDate: { $gte: startOfMonth, $lt: startOfNextMonth } } },
+            { $group: { _id: { $dayOfMonth: '$isoDate' }, total: { $sum: 1 } } },
+            { $sort:  { _id: 1 } }
+          ],
 
-    const contMesA = await Registro.aggregate([
-        {
-            "$project": {
-                "dateMonth": { "$month": "$isoDate" },
-                "dateYear": { "$year": "$isoDate" },
-            }
-        },
-        {
-            "$group": {
-                "_id": "$_id",
-                "mesReg": { $first: "$dateMonth" },
-                "anio": { $first: "$dateYear" },
-            }
-        },
-        { "$match": { "mesReg": mesAct, "anio": anioAct } },
-        { $count: "conteo" }
-    ])
-    //console.log('contMesA: ', contMesA,'contSemA: ', contSemA,'contHoyA: ', contHoyA)
-    console.log('contHoy: ', typeof contHoyA[0])
-    if (typeof contHoyA[0] === 'undefined') contHoy = 0
-    else contHoy = contHoyA[0].conteo
-    if (typeof contMesA[0] === 'undefined') contMesAct = 0
-    else contMesAct = contMesA[0].conteo
-    if (typeof contSemA[0] === 'undefined') contSemAct = 0
-    else contSemAct = contSemA[0].conteo
-
-
-
-
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica por dias  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
-
-    var perDias = []
-    //const diaDelMesOb =diaDelMesA.find({"diaMes": 9})
-    if (mesAct == 2) mesArray = 28
-    else if (mesAct == 1 || mesAct == 3 || mesAct == 5 || mesAct == 7 || mesAct == 8 || mesAct == 10 || mesAct == 12) mesArray = 31
-    else mesArray = 30
-
-    for (var i = 0; i < mesArray; i++) {
-        var diaDelMesA = await Registro.aggregate([
-            {
-                "$group": {
-                    "_id": {
-                        "diaMes": { "$dayOfMonth": "$isoDate" },
-                        "mes": { "$month": "$isoDate" },
-                        "anio": { "$year": "$isoDate" },
-                    },
-                    Total: { $sum: 1 }
+          // por mes del año actual
+          perMesA: [
+            { $match: {
+                isoDate: {
+                  $gte: new Date(now.getFullYear(), 0, 1),
+                  $lt:  new Date(now.getFullYear() + 1, 0, 1)
                 }
+              }
             },
-            { "$match": { "_id.diaMes": i + 1, "_id.mes": mesAct, "_id.anio": anioAct } },
-        ])
+            { $group: { _id: { $month: '$isoDate' }, total: { $sum: 1 } } },
+            { $sort:  { _id: 1 } }
+          ],
 
-        if (typeof diaDelMesA[0] === 'undefined') perDias[i] = 0
-        else perDias[i] = diaDelMesA[0].Total
-    }
+          // por día de la semana (mes actual)
+          perDiaSemMesActA: [
+            { $match: { isoDate: { $gte: startOfMonth, $lt: startOfNextMonth } } },
+            { $group: { _id: { $dayOfWeek: '$isoDate' }, total: { $sum: 1 } } },
+            { $sort:  { _id: 1 } }
+          ]
+        }
+      }
+    ]);
 
+    // ------- normalización de arrays (completar huecos) -------
+    const diasEnMes = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+    const zeros = n => Array.from({ length: n }, () => 0);
 
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica por meses  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+    const perDias = zeros(diasEnMes);
+    for (const r of (result.perDiasA || [])) perDias[(r._id ?? 1) - 1] = r.total;
 
-    var perMes = []
+    const perMes = zeros(12);
+    for (const r of (result.perMesA || [])) perMes[(r._id ?? 1) - 1] = r.total;
 
-    for (var i = 0; i < 12; i++) {
-        const perMesA = await Registro.aggregate([
-            {
-                "$project": {
-                    "dateMonth": { "$month": "$isoDate" },
-                    "dateYear": { "$year": "$isoDate" },
-                }
-            },
-            {
-                "$group": {
-                    "_id": "$_id",
-                    "mesReg": { $first: "$dateMonth" },
-                    "anio": { $first: "$dateYear" },
-                }
-            },
-            { "$match": { "mesReg": i + 1, "anio": anioAct } },
-            { $count: "conteo" }
-        ])
-        if (typeof perMesA[0] === 'undefined') perMes[i] = 0
-        else perMes[i] = perMesA[0].conteo
-    }
+    const perDiaSemMesAct = zeros(7); // 1..7 (dom..sab en $dayOfWeek)
+    for (const r of (result.perDiaSemMesActA || [])) perDiaSemMesAct[(r._id ?? 1) - 1] = r.total;
 
-
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Grafica por dias de la semana este mes  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
-
-    var perDiaSemMesAct = []
-
-    for (var i = 0; i < 7; i++) {
-        const perDiaSemMesActA = await Registro.aggregate([
-            {
-                "$project": {
-                    "dateDay": { "$dayOfWeek": "$isoDate" },
-                    "dateMonth": { "$month": "$isoDate" },
-                    "dateYear": { "$year": "$isoDate" },
-                }
-            },
-            {
-                "$group": {
-                    "_id": "$_id",
-                    "diaReg": { $first: "$dateDay" },
-                    "mes": { $first: "$dateMonth" },
-                    "anio": { $first: "$dateYear" },
-                }
-            },
-            { "$match": { "diaReg": i + 1, "anio": mesAct, "anio": anioAct } },
-            { $count: "conteo" }
-        ])
-        if (typeof perDiaSemMesActA[0] === 'undefined') perDiaSemMesAct[i] = 0
-        else perDiaSemMesAct[i] = perDiaSemMesActA[0].conteo
-    }
-    console.log('perDiaSemMesAct: ', perDiaSemMesAct)
-
-
-    res.status(200).send({
-        ClientesCount,
-        contMesAct,
-        contSemAct,
-        contHoy,
-        perDias,
-        perMes,
-        perDiaSemMesAct,
-        Clientes
-    })
-})
+    res.status(200).json({
+      days, from, to: now,
+      ClientesCount: (result.ClientesCountA[0]?.total ?? 0),
+      contHoy: (result.contHoyA[0]?.c ?? 0),
+      contSemAct: (result.contSemA[0]?.c ?? 0),
+      contMesAct: (result.contMesA[0]?.c ?? 0),
+      perDias,
+      perMes,
+      perDiaSemMesAct,
+      Clientes: result.Clientes // documentos de los últimos N días
+    });
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.get('/ingresos', async (req, res) => {
 
