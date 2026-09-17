@@ -1,3 +1,11 @@
-node_modules
+node_modules/
 .env
-package-lock.json
+.env.*
+!.env.example
+
+Backend/fer.e
+Backend/uploads/
+Backend/logs/
+
+*.bak
+*.log

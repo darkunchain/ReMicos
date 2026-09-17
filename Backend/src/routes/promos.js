@@ -7,7 +7,6 @@ const http = require('http');
 //import swal from 'sweetalert2';
 
 
-const jwt = require('jsonwebtoken')
 const Registro = require('../models/promos');
 
 
@@ -169,26 +168,6 @@ router.post('/redime', async (req, res) => {
     res.status(200).render('okis', { establec })
 
 })
-
-
-//%%%%%%%%%%%%%%%%%%%%%% Codigos de aprobacion %%%%%%%%%%%%%%%%%%%%%%%%//
-router.post('/promos/signup', async (req, res) => {
-    const { codigo, establecimiento } = req.body;
-
-    const codeValidate = await Aprob.findOne({ codigo })
-    if (codeValidate) return res.status(401).send("este codigo ya existe, por favor seleccione otro");
-    const newCodigo = new Aprob({ codigo, establecimiento });
-
-    newCodigo.codigo = await Aprob.encryptPassword(codigo)
-
-    await newCodigo.save();
-    const token = jwt.sign({ _id: newCodigo._id }, process.env.SECRET_ENC);
-    res.status(201).json({ token })
-})
-
-
-
-
 
 
 module.exports = router;
