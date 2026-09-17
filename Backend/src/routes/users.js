@@ -50,11 +50,6 @@ router.post('/admin/roles', [verifyToken, rolAdmin], async (req,res) => {
 })
 
 
-router.get('/edit/:userid', verifyToken, async (req, res) => {
-    const userId = await User.findById(req.params.userid)
-    res.status(200).json(userId)
-})
-
 module.exports = router;
 
 function verifyToken(req, res, next){
